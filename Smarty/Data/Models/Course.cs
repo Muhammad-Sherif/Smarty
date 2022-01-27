@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Smarty.Models
+namespace Smarty.Data.Models
 {
     public class Course
     {
