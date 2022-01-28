@@ -9,6 +9,12 @@ namespace Smarty.Data.SmartyDBContext
         {
 
         }
-        
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<CourseGrade> CourseGrades { get; set; }
+        public DbSet<Lab> Labs { get; set; }
+        public DbSet<Member> Members { get; set; }
+        public DbSet<Instructor> Instructors { get; set; }
+        public DbSet<Student> Students{ get; set; }
+
     }
 }
