@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Smarty.Data.SmartyDBContext;
 
@@ -11,9 +12,10 @@ using Smarty.Data.SmartyDBContext;
 namespace Smarty.Migrations
 {
     [DbContext(typeof(SmartyDbContext))]
-    partial class SmartyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220129165319_DropCoursesGradesAndLabsTable")]
+    partial class DropCoursesGradesAndLabsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,43 +56,6 @@ namespace Smarty.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("Smarty.Data.Models.CourseGrade", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Grade")
-                        .HasColumnType("float");
-
-                    b.HasKey("Name", "CourseId");
-
-                    b.ToTable("CoursesGrades");
-                });
-
-            modelBuilder.Entity("Smarty.Data.Models.Lab", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Day")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("Time")
-                        .HasColumnType("time");
-
-                    b.HasKey("Name", "CourseId");
-
-                    b.ToTable("Labs");
                 });
 
             modelBuilder.Entity("Smarty.Data.Models.Member", b =>

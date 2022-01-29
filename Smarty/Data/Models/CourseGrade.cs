@@ -8,9 +8,9 @@ namespace Smarty.Data.Models
 {
     public class CourseGrade
     {
-        public int Id { get; set; }
         public string Name{ get; set; }
         public double Grade { get; set; }
+        public int CourseId { get; set; }
 
 
 
