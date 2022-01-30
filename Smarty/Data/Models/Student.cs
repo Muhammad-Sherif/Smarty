@@ -10,6 +10,11 @@ namespace Smarty.Data.Models
     {
         public string Department { get; set; }
         public int Year{ get; set; }
+        public ICollection<Course> Courses { get; set; }
+        public ICollection<StudentsCourses> StudentsCourses{ get; set; }
+        public ICollection<Lab> Labs{ get; set; }
+        public ICollection<StudentsLabs> StudentsLabs { get; set; }
+
 
     }
 

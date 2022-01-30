@@ -8,15 +8,14 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
     {
         public void Configure(EntityTypeBuilder<CourseGrade> builder)
         {
-            EntityConfigurations(builder);
+            RelationsConfigurations(builder);
         }
 
-        public void EntityConfigurations(EntityTypeBuilder<CourseGrade> builder)
+        public void RelationsConfigurations(EntityTypeBuilder<CourseGrade> builder)
         {
-            builder.HasKey(cg => new { cg.Name, cg.CourseId });
+            builder.HasKey(cg => new { cg.Name,cg.CourseId});
             builder.Property(cg => cg.Name).IsRequired().HasMaxLength(250);
             builder.Property(cg => cg.Grade).IsRequired();
-
         }
 
     }

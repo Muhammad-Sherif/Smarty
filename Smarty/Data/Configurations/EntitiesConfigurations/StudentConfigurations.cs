@@ -14,12 +14,55 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
         public void Configure(EntityTypeBuilder<Student> builder)
         {
             EntityConfigurations(builder);
+            RelationsConfigurations(builder);   
         }
         public void EntityConfigurations(EntityTypeBuilder<Student> builder)
         {
-            builder.Property(c => c.Department).HasMaxLength(250);
+            builder.Property(s => s.Department).HasMaxLength(250);
+        }
+        public void RelationsConfigurations(EntityTypeBuilder<Student> builder)
+        {
+
+			builder
+				.HasMany(s => s.Courses)
+				.WithMany(c => c.Students)
+				.UsingEntity<StudentsCourses>(
+					j => j
+					.HasOne(sc => sc.Course)
+					.WithMany(c => c.StudentsCourses)
+                    .HasForeignKey(sc => sc.CourseId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                    j => j
+                    .HasOne(sc => sc.Student)
+                    .WithMany(s => s.StudentsCourses)
+                    .HasForeignKey(sc => sc.StudentId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                    j => j
+                    .HasKey(t => new { t.StudentId, t.CourseId})
+                    );
+
+
+            builder
+                .HasMany(s => s.Labs)
+                .WithMany(l => l.Students)
+                .UsingEntity<StudentsLabs>(
+                    j => j
+                    .HasOne(sl => sl.Lab)
+                    .WithMany(l => l.StudentsLabs)
+                    .HasForeignKey(sl => new { sl.LabName ,sl.CourseId} )
+                    .OnDelete(DeleteBehavior.Cascade),
+                    j => j
+                    .HasOne(sl => sl.Student)
+                    .WithMany(s => s.StudentsLabs)
+                    .HasForeignKey(sl => sl.StudentId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                    j => j
+                    .HasKey(t => new { t.StudentId , t.CourseId , t.LabName })
+                    );
+
 
         }
+
 
     }
 }

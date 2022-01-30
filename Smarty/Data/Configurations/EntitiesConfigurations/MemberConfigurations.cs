@@ -18,7 +18,6 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
             builder.Property(m=>m.FirstName).IsRequired().HasMaxLength(250);
             builder.Property(m=>m.LastName).IsRequired().HasMaxLength(250);
             builder.Property(m=>m.Gender).IsRequired().HasMaxLength(250);
-
         }
 
 

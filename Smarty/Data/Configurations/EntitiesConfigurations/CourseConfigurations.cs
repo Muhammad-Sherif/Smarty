@@ -14,7 +14,7 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
         public void Configure(EntityTypeBuilder<Course> builder)
         {
             EntityConfigurations(builder);
-
+            RelationsConfigurations(builder);
         }
 
         public void EntityConfigurations(EntityTypeBuilder<Course> builder)
@@ -25,6 +25,22 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
             builder.Property(c => c.Time).IsRequired();
             builder.Property(c => c.AccessCode).IsRequired();
             builder.Property(c => c.RegisterCode).IsRequired();
+
+        }
+        public void RelationsConfigurations(EntityTypeBuilder<Course> builder)
+        {
+            builder
+                .HasMany(c => c.Labs)
+                .WithOne(l => l.Course)
+                .HasForeignKey(l => l.CourseId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasMany(c => c.CourseGrades)
+                .WithOne(cg => cg.Course)
+                .HasForeignKey(cg => cg.CourseId)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
         }
 

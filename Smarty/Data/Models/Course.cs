@@ -16,5 +16,16 @@ namespace Smarty.Data.Models
         public Guid RegisterCode{ get; set; }
         public Guid AccessCode{ get; set; }
 
+        public int InstructorId { get; set; }
+        public Instructor Instructor { get; set; }
+
+        public ICollection<Lab> Labs { get; set; }
+
+        public ICollection<CourseGrade> CourseGrades { get; set; }
+        public ICollection<Student> Students{ get; set; }
+        public ICollection<StudentsCourses> StudentsCourses{ get; set; }
+
+
+
     }
 }

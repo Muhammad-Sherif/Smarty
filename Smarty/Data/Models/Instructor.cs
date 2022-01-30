@@ -8,6 +8,8 @@ namespace Smarty.Data.Models
 {
     public class Instructor : Member
     {
+        public ICollection<Course> Courses { get; set; }
+
 
     }
 }

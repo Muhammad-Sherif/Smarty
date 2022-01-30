@@ -20,5 +20,6 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
 
 
         }
+        
     }
 }
