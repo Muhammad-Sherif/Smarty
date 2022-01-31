@@ -8,6 +8,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<SmartyDbContext>(
     options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
 var app = builder.Build();
