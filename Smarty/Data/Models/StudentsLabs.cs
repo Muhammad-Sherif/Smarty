@@ -11,8 +11,7 @@ namespace Smarty.Data.Models
 
         public int StudentId { get; set; }
         public Student Student { get; set; }
-        public string LabName{ get; set; }
-        public int CourseId { get; set; }
+        public int LabId { get; set; }
         public Lab Lab { get; set; }
 
     }

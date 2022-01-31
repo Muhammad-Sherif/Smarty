@@ -49,7 +49,7 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
                     j => j
                     .HasOne(sl => sl.Lab)
                     .WithMany(l => l.StudentsLabs)
-                    .HasForeignKey(sl => new { sl.LabName ,sl.CourseId} )
+                    .HasForeignKey(sl =>  sl.LabId)
                     .OnDelete(DeleteBehavior.Cascade),
                     j => j
                     .HasOne(sl => sl.Student)
@@ -57,7 +57,7 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
                     .HasForeignKey(sl => sl.StudentId)
                     .OnDelete(DeleteBehavior.Cascade),
                     j => j
-                    .HasKey(t => new { t.StudentId , t.CourseId , t.LabName })
+                    .HasKey(t => new { t.StudentId , t.LabId, })
                     );
 
 
