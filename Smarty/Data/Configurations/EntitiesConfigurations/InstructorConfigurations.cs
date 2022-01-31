@@ -22,7 +22,7 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
             builder.HasMany(i => i.Courses)
                 .WithOne(c => c.Instructor)
                 .HasForeignKey(c => c.InstructorId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
         }
 
