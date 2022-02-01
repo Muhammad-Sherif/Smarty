@@ -1,4 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
+using Smarty.Data.Repositories.Implementations;
+using Smarty.Data.Repositories.Interfaces;
 using Smarty.Data.SmartyDBContext;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +12,14 @@ builder.Services.AddDbContext<SmartyDbContext>(
     options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
+{
+	ProgressBar = true,
+	PositionClass = ToastPositions.TopRight,
+	PreventDuplicates = true,
+	CloseButton = true
+});
 
 
 var app = builder.Build();
