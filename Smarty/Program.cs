@@ -7,19 +7,16 @@ using Smarty.Data.SmartyDBContext;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages()
+    .AddNToastNotifyToastr(new ToastrOptions(){
+        ProgressBar = true,PositionClass = ToastPositions.TopRight,
+        PreventDuplicates = true,CloseButton = true}); 
+    
 builder.Services.AddDbContext<SmartyDbContext>(
     options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
-{
-	ProgressBar = true,
-	PositionClass = ToastPositions.TopRight,
-	PreventDuplicates = true,
-	CloseButton = true
-});
 
 
 var app = builder.Build();
