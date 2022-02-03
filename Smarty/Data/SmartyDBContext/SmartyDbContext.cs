@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Smarty.Data.Models;
 using System.Reflection;
 
 namespace Smarty.Data.SmartyDBContext
 {
-    public class SmartyDbContext : DbContext
+    public class SmartyDbContext : IdentityDbContext<SmartyUser>
     {
         public SmartyDbContext(DbContextOptions<SmartyDbContext> contextOptions) : base(contextOptions)
         {

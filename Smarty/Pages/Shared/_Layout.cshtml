@@ -1,93 +1,119 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using Smarty.Data.Models;
+@inject SignInManager<SmartyUser> SignInManager
+@inject UserManager<SmartyUser> UserManager
+<!DOCTYPE html>
 <html>
-    
+
 <!-- Mirrored from limpidthemes.com/Themeforest/html/Smarty/Smarty-HTML/dashboard/admin-add-student.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 03 Nov 2021 12:56:47 GMT -->
 <head>
 
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="author" content="">
-        <title>Smarty</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="">
+    <title>Smarty</title>
 
-        <!-- Styles -->
-        <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
-		 <link href="~/assets/css/chartist.min.css" rel="stylesheet" media="screen">
-		<link href="~/assets/css/owl.carousel.min.css" rel="stylesheet" media="screen">
-		<link href="~/assets/css/owl.theme.default.min.css" rel="stylesheet" media="screen">
-        <link href="~/assets/css/style.css" rel="stylesheet" media="screen">
+    <!-- Styles -->
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="~/assets/css/chartist.min.css" rel="stylesheet" media="screen">
+    <link href="~/assets/css/owl.carousel.min.css" rel="stylesheet" media="screen">
+    <link href="~/assets/css/owl.theme.default.min.css" rel="stylesheet" media="screen">
+    <link href="~/assets/css/style.css" rel="stylesheet" media="screen">
 
-        <!-- Fonts -->
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
-        <link href="~/assets/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" media="screen">
+    <!-- Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="~/assets/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" media="screen">
 
-    </head>
-    <body>
-		<div class="row dashboard-top-nav">
-			<div class="col-sm-3 logo">
-				<h5><i class="fa fa-book"></i>Smarty</h5>
-			</div>
-			<div class="col-sm-4 top-search">
-				<div class="search">
-					<i class="fa fa-search"></i>
-					<input type="text" placeholder="Search">
-				</div>
-			</div>
-			<div class="col-sm-5 notification-area">
-				<ul class="top-nav-list">
-					<li class="user dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<span>User Name<span class="caret"></span></span>
-						</a>
-						<ul class="dropdown-menu notification-list">
-							<li>
-								<a href="#"><i class="fa fa-cogs"></i> SETTINGS</a>
-							</li>
-							<li>
-								<a href="#"><i class="fa fa-users"></i> USER PROFILE</a>
-							</li>
-							<li>
-								<a href="#"><i class="fa fa-key"></i> CHANGE PASSWORD</a>
-							</li>
-							
-							<li>
-								<div class="all-notifications">
-									<a href="#">LOGOUT</a>
-								</div>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</div>
-        	
-		<div class="parent-wrapper" id="outer-wrapper">
+</head>
+<body>
+    <div class="row dashboard-top-nav">
+        <div class="col-sm-3 logo">
+            <h5><i class="fa fa-book"></i>Smarty</h5>
+        </div>
+        <div class="col-sm-4 top-search">
+            <div class="search">
+                <i class="fa fa-search"></i>
+                <input type="text" placeholder="Search">
+            </div>
+        </div>
+        <div class="col-sm-5 notification-area">
+            <ul class="top-nav-list">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <li class="user dropdown">
+                        <a asp-area="Identity" asp-page="/Account/Manage/Index" class="dropdown-toggle" data-toggle="dropdown">
+                            <span>Hello @User.Identity.Name!<span class="caret"></span></span>
+                        </a>
+                        <ul class="dropdown-menu notification-list">
+                            <li>
+                                <a href="#"><i class="fa fa-cogs"></i> SETTINGS</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-users"></i> USER PROFILE</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-key"></i> CHANGE PASSWORD</a>
+                            </li>
 
-			@RenderSection("SideMenu", false)
-			<!-- MAIN CONTENT -->
-			<div class="main-content" id="content-wrapper">
-				@RenderBody()
+                            <li>
+                                <div class="all-notifications">
+                                    <form class="form-inline" asp-page="/Account/Logout"
+                                      asp-route-returnUrl="@Url.Page("/", new { area = "" })"
+                                      asp-area="Identity" method="post">
+                                        <button class="nav-link btn btn-link text-dark"
+                                            type="submit">
+                                            LOGOUT
+                                        </button>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li >
+                        <a  asp-area="Identity"
+                       asp-page="/Account/Register">Register</a>
+                    </li>
+                    <li >
+                        <a  asp-area="Identity"
+                       asp-page="/Account/Login">Login</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="parent-wrapper" id="outer-wrapper">
+
+        @RenderSection("SideMenu", false)
+        <!-- MAIN CONTENT -->
+        <div class="main-content" id="content-wrapper">
+            @RenderBody()
 
 
 
-				<div class="dash-footer col-lg-12">
-					<p>Copyright Smarty 2022</p>
-				</div>
-			</div>
+            <div class="dash-footer col-lg-12">
+                <p>Copyright Smarty 2022</p>
+            </div>
+        </div>
 
-		</div>
-	
-		<!-- Scripts -->
-        <script src="~/assets/js/jQuery_v3_2_0.min.js"></script>
-		<script src="~/assets/js/jquery-ui.min.js"></script>
-        <script src="~/assets/js/bootstrap.min.js"></script>
-		<script src="~/assets/plugins/owl.carousel.min.js"></script>
-		<script src="~/assets/plugins/Chart.min.js"></script>
-		<script src="~/assets/plugins/jquery.dataTables.min.js"></script>
-		<script src="~/assets/plugins/dataTables.responsive.min.js"></script>
-        <script src="~/assets/js/js.js"></script>
-		@await RenderSectionAsync("Scripts", required: false)
-		@await Component.InvokeAsync("NToastNotify")
-    </body>
-<script>'undefined'=== typeof _trfq || (window._trfq = []);'undefined'=== typeof _trfd && (window._trfd=[]),_trfd.push({'tccl.baseHost':'secureserver.net'}),_trfd.push({'ap':'cpsh-oh'},{'server':'sg2plzcpnl466829'},{'id':'7770191'}) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.</script><script src='../../../../../../img1.wsimg.com/tcc/tcc_l.combined.1.0.6.min.js'></script>
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/assets/js/jQuery_v3_2_0.min.js"></script>
+    <script src="~/assets/js/jquery-ui.min.js"></script>
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script src="~/assets/plugins/owl.carousel.min.js"></script>
+    <script src="~/assets/plugins/Chart.min.js"></script>
+    <script src="~/assets/plugins/jquery.dataTables.min.js"></script>
+    <script src="~/assets/plugins/dataTables.responsive.min.js"></script>
+    <script src="~/assets/js/js.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
+</body>
+<script>'undefined'=== typeof _trfq || (window._trfq = []);'undefined'=== typeof _trfd && (window._trfd=[]),_trfd.push({'tccl.baseHost':'secureserver.net'}),_trfd.push({'ap':'cpsh-oh'},{'server':'sg2plzcpnl466829'},{'id':'7770191'}) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.</script>
+<script src='../../../../../../img1.wsimg.com/tcc/tcc_l.combined.1.0.6.min.js'></script>
 </html>

@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NToastNotify;
+using Smarty.Data.Models;
 using Smarty.Data.Repositories.Implementations;
 using Smarty.Data.Repositories.Interfaces;
 using Smarty.Data.SmartyDBContext;
@@ -10,11 +12,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages()
     .AddNToastNotifyToastr(new ToastrOptions(){
         ProgressBar = true,PositionClass = ToastPositions.TopRight,
-        PreventDuplicates = true,CloseButton = true}); 
-    
+        PreventDuplicates = true,CloseButton = true});
+
+
+builder.Services.AddDefaultIdentity<SmartyUser> (options =>
+options.SignIn.RequireConfirmedAccount = true)
+.AddEntityFrameworkStores<SmartyDbContext>();
+
 builder.Services.AddDbContext<SmartyDbContext>(
     options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("Default")));
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -34,6 +42,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
