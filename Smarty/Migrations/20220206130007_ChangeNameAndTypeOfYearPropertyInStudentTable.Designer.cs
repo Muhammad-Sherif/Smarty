@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Smarty.Data.SmartyDBContext;
 
@@ -11,9 +12,10 @@ using Smarty.Data.SmartyDBContext;
 namespace Smarty.Migrations
 {
     [DbContext(typeof(SmartyDbContext))]
-    partial class SmartyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220206130007_ChangeNameAndTypeOfYearPropertyInStudentTable")]
+    partial class ChangeNameAndTypeOfYearPropertyInStudentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,7 +197,7 @@ namespace Smarty.Migrations
 
                     b.HasIndex("InstructorId");
 
-                    b.ToTable("Courses", (string)null);
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("Smarty.Data.Models.CourseGrade", b =>
@@ -214,7 +216,7 @@ namespace Smarty.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("CoursesGrades", (string)null);
+                    b.ToTable("CoursesGrades");
                 });
 
             modelBuilder.Entity("Smarty.Data.Models.Lab", b =>
@@ -243,7 +245,7 @@ namespace Smarty.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Labs", (string)null);
+                    b.ToTable("Labs");
                 });
 
             modelBuilder.Entity("Smarty.Data.Models.Member", b =>
@@ -284,7 +286,7 @@ namespace Smarty.Migrations
                     b.HasIndex("SmartyUserId")
                         .IsUnique();
 
-                    b.ToTable("Members", (string)null);
+                    b.ToTable("Members");
 
                     b.HasDiscriminator<string>("MemberType").HasValue("Member");
                 });
@@ -366,7 +368,7 @@ namespace Smarty.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("StudentsCourses", (string)null);
+                    b.ToTable("StudentsCourses");
                 });
 
             modelBuilder.Entity("Smarty.Data.Models.StudentsLabs", b =>
@@ -381,7 +383,7 @@ namespace Smarty.Migrations
 
                     b.HasIndex("LabId");
 
-                    b.ToTable("StudentsLabs", (string)null);
+                    b.ToTable("StudentsLabs");
                 });
 
             modelBuilder.Entity("Smarty.Data.Models.Instructor", b =>

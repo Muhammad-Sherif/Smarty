@@ -19,6 +19,7 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
         public void EntityConfigurations(EntityTypeBuilder<Student> builder)
         {
             builder.Property(s => s.Department).HasMaxLength(250);
+            builder.Property(s => s.UniversityYear).HasMaxLength(250);
         }
         public void RelationsConfigurations(EntityTypeBuilder<Student> builder)
         {

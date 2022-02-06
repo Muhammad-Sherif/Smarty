@@ -9,7 +9,7 @@ namespace Smarty.Data.Models
     public class Student : Member
     {
         public string Department { get; set; }
-        public int Year{ get; set; }
+        public string UniversityYear{ get; set; }
         public ICollection<Course> Courses { get; set; }
         public ICollection<StudentsCourses> StudentsCourses{ get; set; }
         public ICollection<Lab> Labs{ get; set; }
