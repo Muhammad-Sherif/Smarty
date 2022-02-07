@@ -4,18 +4,71 @@
     ViewData["Title"] = "Log out";
 }
 
-<header>
-    <h1>@ViewData["Title"]</h1>
+
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 clear-padding-xs">
+            <h5 class="page-title"><i class="fa fa-user-secret"></i>LOGOUT</h5>
+            <div class="section-divider"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 clear-padding-xs">
+            <div class="col-md-12">
+                <div class="dash-item first-dash-item">
+                    <h6 class="item-title"><i class="fa fa-user"></i>LOGOUT INFO</h6>
+                    <div class="inner-item">
+                        <div class="dash-form">
+
+                            @{
+                                if (User.Identity.IsAuthenticated)
+                                {
+                                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                                        <button type="submit">Click here to Logout</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <p>You have successfully logged out </p>
+                                }
+                            }
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+    <header class="text-center">
+    <h2>LOG OUT</h2>
     @{
-        if (User.Identity.IsAuthenticated)
-        {
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                <button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
-            </form>
-        }
-        else
-        {
-            <p>You have successfully logged out of the application.</p>
-        }
+    if (User.Identity.IsAuthenticated)
+    {
+    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+    <button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
+    </form>
     }
-</header>
+    else
+    {
+    <p>You have successfully logged out </p>
+    }
+    }
+*@</header>
