@@ -65,7 +65,7 @@ body {
   margin-top: 20px;
   margin-bottom: 10px;
 }
-.dash-form a {
+.dash-form a , button{
   color: #fff;
   background: #27ae60;
   display: inline-block;
@@ -76,7 +76,7 @@ body {
   text-decoration: none;
   border: 1px solid transparent;
 }
-.dash-form a:hover {
+.dash-form a:hover , button:hover {
   color: #27ae60;
   background: transparent;
   border: 1px solid #27ae60;
