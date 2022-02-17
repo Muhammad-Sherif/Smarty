@@ -17,18 +17,18 @@ namespace Smarty.Data.Repositories.Implementations
             _context = context;
 		}
 
-		public IEnumerable<T> FindAll()
+		public IEnumerable<T> GetAll()
 		{
             return _context.Set<T>().ToList();
 
         }
 
-		public async Task<IEnumerable<T>> FindAllAsync()
+		public async Task<IEnumerable<T>> GetAllAsync()
 		{
             return await _context.Set<T>().ToListAsync();
 
         }
-        public IEnumerable<T> FindAll(params Expression<Func<T, object>>[] navigationProperties )
+        public IEnumerable<T> GetAll(params Expression<Func<T, object>>[] navigationProperties )
         {
 
             IQueryable<T> query = _context.Set<T>();
@@ -36,7 +36,7 @@ namespace Smarty.Data.Repositories.Implementations
             return query.ToList();
         }
 
-        public async Task<IEnumerable<T>> FindAllAsync(params Expression<Func<T,object>>[] navigationProperties )
+        public async Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T,object>>[] navigationProperties )
         {
             IQueryable<T> query = _context.Set<T>();
             query = navigationProperties.Aggregate(query, (current, navigationProperty) => current.Include(navigationProperty));
@@ -44,16 +44,16 @@ namespace Smarty.Data.Repositories.Implementations
 		}
 
 
-        public T FindById(int? id)
+        public T FindByKey(params object[] keyValues)
         {
-            return _context.Set<T>().Find(id);
+            return _context.Set<T>().Find(keyValues);
         }
 		
 
 
-        public async Task<T> FindByIdAsync(int? id)
+        public async Task<T> FindByKeyAsync(params object[] keyValues)
         {
-            return await _context.Set<T>().FindAsync(id);
+            return await _context.Set<T>().FindAsync(keyValues);
         }
 
 		public T FirstOrDefault(Expression<Func<T, bool>> criteria, params Expression<Func<T, object>>[] navigationProperties)
@@ -70,7 +70,7 @@ namespace Smarty.Data.Repositories.Implementations
             return await query.FirstOrDefaultAsync(criteria);
         }
         
-        public IEnumerable<T> Find(Expression<Func<T, bool>> criteria, params Expression<Func<T, object>>[] navigationProperties)
+        public IEnumerable<T> FindByCriteria(Expression<Func<T, bool>> criteria, params Expression<Func<T, object>>[] navigationProperties)
         {
             IQueryable<T> query = _context.Set<T>();
             query = navigationProperties.Aggregate(query, (current, navigationProperty) => current.Include(navigationProperty));
@@ -78,7 +78,7 @@ namespace Smarty.Data.Repositories.Implementations
         }
 
 
-        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> criteria, params Expression<Func<T, object>>[] navigationProperties)
+        public async Task<IEnumerable<T>> FindByCriteriaAsync(Expression<Func<T, bool>> criteria, params Expression<Func<T, object>>[] navigationProperties)
         {
             IQueryable<T> query = _context.Set<T>();
 

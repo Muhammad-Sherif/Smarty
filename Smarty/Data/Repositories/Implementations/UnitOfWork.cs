@@ -11,7 +11,8 @@ namespace Smarty.Data.Repositories.Implementations
 	public class UnitOfWork : IUnitOfWork
 	{
 		private readonly SmartyDbContext _context;
-		public IGenericRepository<Course> Courses{ get; private set; }
+		public IGenericRepository<Course> Courses { get; private set; }
+		public IGenericRepository<CourseGrade> CourseGrades{ get; private set; }
 
 		public IGenericRepository<Lab> Labs { get; private set; }
 
@@ -22,9 +23,9 @@ namespace Smarty.Data.Repositories.Implementations
 		{
 			_context = context;
 			Courses = new GenericRepository<Course>(_context);
+			CourseGrades = new GenericRepository<CourseGrade>(_context);
 			Labs = new GenericRepository<Lab>(_context);
 			Members = new GenericRepository<Member>(_context);
-
 
 		}
 		public void Dispose()

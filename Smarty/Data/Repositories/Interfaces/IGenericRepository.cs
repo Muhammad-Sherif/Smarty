@@ -8,19 +8,19 @@ namespace Smarty.Data.Repositories.Interfaces
 {
 	public interface IGenericRepository<T> where T : class
 	{
-		T FindById(int? id);
-		public Task<T> FindByIdAsync(int? id);
+		T FindByKey(params object[] keyValues);
+		public Task<T> FindByKeyAsync(params object[] keyValues);
 		public T FirstOrDefault(Expression<Func<T, bool>> criteria, params Expression<Func<T, object>>[] navigationProperties);
 		public Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> criteria, params Expression<Func<T, object>>[] navigationProperties);
 
-		IEnumerable<T> FindAll(params Expression<Func<T, object>>[] navigationProperties);
-		public Task<IEnumerable<T>> FindAllAsync(params Expression<Func<T, object>>[] navigationProperties);
+		IEnumerable<T> GetAll(params Expression<Func<T, object>>[] navigationProperties);
+		public Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T, object>>[] navigationProperties);
 
-		IEnumerable<T> FindAll();
-		public Task<IEnumerable<T>> FindAllAsync();
+		IEnumerable<T> GetAll();
+		public Task<IEnumerable<T>> GetAllAsync();
 
-		IEnumerable<T> Find(Expression<Func<T, bool>> criteria, params Expression<Func<T, object>>[] navigationProperties);
-		Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> criteria, params Expression<Func<T, object>>[] navigationProperties);
+		IEnumerable<T> FindByCriteria(Expression<Func<T, bool>> criteria, params Expression<Func<T, object>>[] navigationProperties);
+		Task<IEnumerable<T>> FindByCriteriaAsync(Expression<Func<T, bool>> criteria, params Expression<Func<T, object>>[] navigationProperties);
 
 		int Count();
 		int Count(Expression<Func<T, bool>> criteria);
