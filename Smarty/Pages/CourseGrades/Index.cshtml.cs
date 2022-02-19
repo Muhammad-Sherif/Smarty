@@ -46,27 +46,6 @@ namespace Smarty.Pages.CourseGrades
 			var courseGradeViewModels = _mapper.Map<IEnumerable<CourseGradeViewModel>>(coursesGrades);
 			return new JsonResult(courseGradeViewModels);
 		}
-		//public async Task<IActionResult> OnPostDelete(int? courseId , string name)
-		//{
-		//	if (courseId == null || name == null)
-		//		return BadRequest();
-
-		//	var instructorId = _userManager.GetUserAsync(User).Result.MemberId;
-		//	var course = await _context.Courses.FirstOrDefaultAsync(c => c.Id == courseId && c.InstructorId == instructorId);
-		//	if (course == null)
-		//		return NotFound();
-
-
-		//	var courseGrade = await _context.CourseGrades.FindByKeyAsync(name ,courseId);
-		//	if (courseGrade == null)
-		//		return NotFound();
-
-
-		//	_context.CourseGrades.Delete(courseGrade);
-		//	_context.SaveChanges();
-		//	return new OkResult();
-		//}
-
 
 	}
 }
