@@ -10,5 +10,7 @@ namespace Smarty.Data.Models
 	public class SmartyUser : IdentityUser
 	{
 		public Member Member { get; set; }
+		public int MemberId{ get; set; }
+
 	}
 }

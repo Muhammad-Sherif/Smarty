@@ -16,7 +16,6 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
         {
             builder.HasDiscriminator<string>("MemberType");
             builder.Property("MemberType").HasMaxLength(250);
-            builder.Property(m=>m.SmartyUserId).IsRequired().HasMaxLength(450);
             builder.Property(m=>m.FirstName).IsRequired().HasMaxLength(250);
             builder.Property(m=>m.LastName).IsRequired().HasMaxLength(250);
             builder.Property(m=>m.Gender).IsRequired().HasMaxLength(250);
@@ -26,7 +25,7 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
             builder
                 .HasOne(m => m.SmartyUser)
                 .WithOne(su => su.Member)
-                .HasForeignKey<Member>(m => m.SmartyUserId)
+                .HasForeignKey<SmartyUser>(sm => sm.MemberId)
                 .OnDelete(DeleteBehavior.Cascade);
 
 		}
