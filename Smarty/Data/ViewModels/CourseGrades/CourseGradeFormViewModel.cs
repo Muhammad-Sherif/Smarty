@@ -15,6 +15,6 @@ namespace Smarty.Data.ViewModels.CourseGrades
 		[StringLength(250)]
 		public string Name { get; set; }
 		[Required]
-		public int Grade { get; set; }
+		public double Grade { get; set; }
 	}
 }
