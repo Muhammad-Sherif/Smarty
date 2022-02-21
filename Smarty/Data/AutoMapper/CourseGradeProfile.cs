@@ -15,7 +15,7 @@ namespace Smarty.Data.AutoMapper
 		{
 			CreateMap<CourseGrade, CourseGradeViewModel>();
 			CreateMap<Course, SelectCourseViewModel>();
-			CreateMap<CourseGradeFormViewModel, CourseGrade>();
+			CreateMap<CourseGradeFormViewModel, CourseGrade>().ReverseMap();
 
 		}
 	}
