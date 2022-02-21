@@ -28,7 +28,7 @@ namespace Smarty.Pages.CourseGrades
 			var courses = await _context.Courses.FindByCriteriaAsync(c => c.InstructorId == instructorId);
 
 			var selectListViewModel = _mapper.Map<IEnumerable<SelectCourseViewModel>>(courses);
-			SelectList = new SelectList(selectListViewModel , "Id" , "Name" , courseId);
+			SelectList = new SelectList(selectListViewModel , "Id" , "Description" , courseId);
 			return Page();
 		}
 		public async Task<IActionResult> OnGetGrades(int? courseId)

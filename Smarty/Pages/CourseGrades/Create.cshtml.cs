@@ -32,7 +32,7 @@ namespace Smarty.Pages.CourseGrades
 			var courses = await _context.Courses.FindByCriteriaAsync(c => c.InstructorId == instructorId);
 
 			var selectListViewModel = _mapper.Map<IEnumerable<SelectCourseViewModel>>(courses);
-			SelectList = new SelectList(selectListViewModel, "Id", "Name");
+			SelectList = new SelectList(selectListViewModel, "Id", "Description");
 			return Page();
 		}
 		public async Task<IActionResult> OnPost()
@@ -42,7 +42,8 @@ namespace Smarty.Pages.CourseGrades
 
 			var courses = await _context.Courses.FindByCriteriaAsync(c => c.InstructorId == instructorId);
 			var selectListViewModel = _mapper.Map<IEnumerable<SelectCourseViewModel>>(courses);
-			SelectList = new SelectList(selectListViewModel, "Id", "Name");
+			SelectList = new SelectList(selectListViewModel, "Id", "Description");
+
 
 			if (!ModelState.IsValid)
 				return Page();
