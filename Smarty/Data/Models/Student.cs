@@ -14,6 +14,8 @@ namespace Smarty.Data.Models
         public ICollection<StudentsCourses> StudentsCourses{ get; set; }
         public ICollection<Lab> Labs{ get; set; }
         public ICollection<StudentsLabs> StudentsLabs { get; set; }
+        public ICollection<StudentsGrades> StudentsGrades { get; set; }
+        public ICollection<CourseGrade> CoursesGrades{ get; set; }
 
 
     }

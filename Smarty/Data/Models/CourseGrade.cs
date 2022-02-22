@@ -13,6 +13,8 @@ namespace Smarty.Data.Models
         public int CourseId { get; set; }
         public Course Course { get; set; }
 
+        public ICollection<StudentsGrades> StudentsGrades { get; set; }
+        public ICollection<Student> Students { get; set; }
 
 
     }

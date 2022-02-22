@@ -9,7 +9,7 @@ namespace Smarty.Data.Models
 	public class StudentsGrades
 	{
 		public int CourseId { get; set; }
-		public int GradeName { get; set; }
+		public string GradeName { get; set; }
 		public CourseGrade CourseGrade { get; set; }
 
 		public int StudentId { get; set; }
