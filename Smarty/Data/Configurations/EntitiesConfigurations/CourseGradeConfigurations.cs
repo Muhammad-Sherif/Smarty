@@ -15,7 +15,7 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
         {
             builder.HasKey(cg => new { cg.Name,cg.CourseId});
             builder.Property(cg => cg.Name).IsRequired().HasMaxLength(250);
-            builder.Property(cg => cg.Grade).IsRequired();
+            builder.Property(cg => cg.MaxValue).IsRequired();
         }
 
     }

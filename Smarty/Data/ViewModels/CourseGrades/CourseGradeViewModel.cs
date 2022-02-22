@@ -6,7 +6,7 @@ namespace Smarty.Data.ViewModels.CourseGrades
 	{
 		public int CourseId { get; set; }
 		public string Name { get; set; }
-		public double Grade{ get; set; }
+		public double MaxValue{ get; set; }
 
 	}
 }
