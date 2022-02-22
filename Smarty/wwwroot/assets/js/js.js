@@ -20,31 +20,7 @@ jQuery(document).ready(function($){
 	jQuery("#endDate").datepicker();
 	jQuery("#studentDOB").datepicker({changeYear: true});
 	
-	//Student attendence detailed table
 	$('#dataTable').DataTable();
-	//jQuery('#dataTable').DataTable();
-
-	//jQuery('#attendenceDetailedTable').DataTable({
-	//	"serverSide": true,
-	//	"filter": true,
-	//	"ajax": {
-	//		"url":"/coursegrades",
-	//		"type": "POST",
-	//		"datatype": "json",
-	//		'beforeSend': function (request) {
-	//			request.setRequestHeader("RequestVerificationToken", document.getElementsByName('__RequestVerificationToken')[0].value);
-	//		}
-	//	},
-	//	"columnDefs": [{ "targets": [0, 1], "visible": true }],
-	//	"columns": [
-	//		{ "data": "courseId", "name": "CourseId", "autowidth": true },
-	//		{ "data": "name", "name": "Name", "autowidth": true },
-	//		{ "data": "grade", "name": "Grade", "autowidth":true }
-
-	//	]
-
-
- //   });
 	
 	
 	//Student attendence horizontal bar chart

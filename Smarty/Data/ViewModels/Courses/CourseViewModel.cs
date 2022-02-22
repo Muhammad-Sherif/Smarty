@@ -8,6 +8,9 @@ namespace Smarty.Data.ViewModels.Courses
         [StringLength(250)]
         public string Code { get; set; }
 
+        [StringLength(2500)]
+        public string Description { get; set; }
+
         [Required]
         [StringLength(250)]
         public string Name { get; set; }

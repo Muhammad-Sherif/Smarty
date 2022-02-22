@@ -18,9 +18,13 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
+textarea {
+    resize:none
+}
 .row {
   margin: 0;
 }
+
 .dashboard-top-nav {
   padding: 5px 45px;
   background: #07253f;

@@ -13,6 +13,7 @@ builder.Services.AddRazorPages()
     .AddNToastNotifyToastr(new ToastrOptions(){
         ProgressBar = true,PositionClass = ToastPositions.TopRight,
         PreventDuplicates = true,CloseButton = true});
+builder.Services.AddRazorPages();
 
 
 builder.Services.AddDefaultIdentity<SmartyUser> (options =>
@@ -29,7 +30,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline 
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");

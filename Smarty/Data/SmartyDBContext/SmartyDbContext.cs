@@ -15,10 +15,10 @@ namespace Smarty.Data.SmartyDBContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+			modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         }
-        public DbSet<Course> Courses { get; set; }
+		public DbSet<Course> Courses { get; set; }
         public DbSet<CourseGrade> CoursesGrades { get; set; }
         public DbSet<Lab> Labs { get; set; }
         public DbSet<Member> Members { get; set; }
