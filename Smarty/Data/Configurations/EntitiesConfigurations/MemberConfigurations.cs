@@ -14,8 +14,9 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
 
         void EntityConfigurations(EntityTypeBuilder<Member> builder)
         {
-            builder.HasDiscriminator<string>("MemberType");
-            builder.Property("MemberType").HasMaxLength(250);
+
+            builder.HasDiscriminator(m=>m.MemberType);
+            builder.Property(m => m.MemberType).IsRequired().HasMaxLength(250);
             builder.Property(m=>m.FirstName).IsRequired().HasMaxLength(250);
             builder.Property(m=>m.LastName).IsRequired().HasMaxLength(250);
             builder.Property(m=>m.Gender).IsRequired().HasMaxLength(250);
