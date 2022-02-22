@@ -25,6 +25,8 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
             builder.Property(c => c.Time).IsRequired();
             builder.Property(c => c.AccessCode).IsRequired();
             builder.Property(c => c.RegisterCode).IsRequired();
+            builder.Property(c => c.Code).HasMaxLength(250).IsRequired();
+            builder.HasIndex(c => c.Code).IsUnique();
 
         }
         public void RelationsConfigurations(EntityTypeBuilder<Course> builder)
