@@ -10,6 +10,8 @@ namespace Smarty.Data.Repositories.Interfaces
 	{
 		IGenericRepository<Course> Courses { get;}
 		IGenericRepository<CourseGrade>	CourseGrades { get;}
+		IGenericRepository<StudentsGrades> StudentsGrades { get;}
+		IGenericRepository<StudentsCourses> StudentsCourses { get;}
 		IGenericRepository<Lab> Labs { get;}
 		IGenericRepository<Member> Members { get;}
 		int SaveChanges();

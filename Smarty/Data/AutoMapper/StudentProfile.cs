@@ -18,10 +18,11 @@ namespace Smarty.Data.AutoMapper
             CreateMap<StudentRegisterFormViewModel, SmartyUser>()
                 .ForMember(dest => dest.Member, options => options.MapFrom(src => src.StudentInfo))
                 .ForMember(dest => dest.UserName, options => options.MapFrom(src => src.Email));
-                
+
+            CreateMap<Student, SelectStudentViewModel>();
 
 
         }
 
-	}
+    }
 }
