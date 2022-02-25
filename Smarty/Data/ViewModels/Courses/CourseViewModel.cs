@@ -4,6 +4,7 @@ namespace Smarty.Data.ViewModels.Courses
 {
     public class CourseViewModel
     {
+     
         [Required]
         [StringLength(250)]
         public string Code { get; set; }
