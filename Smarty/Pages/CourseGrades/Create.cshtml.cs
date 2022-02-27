@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using NToastNotify;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Interfaces;
+using Smarty.Data.Services;
 using Smarty.Data.ViewModels.CourseGrades;
+using Smarty.Data.ViewModels.Courses;
 
 namespace Smarty.Pages.CourseGrades
 {
@@ -15,13 +17,15 @@ namespace Smarty.Pages.CourseGrades
 		private readonly IMapper _mapper;
 		private readonly IUnitOfWork _context;
 		private readonly IToastNotification _toastr;
+		private readonly IInstructorService _instuctorService;
 		private readonly UserManager<SmartyUser> _userManager;
-		public CreateModel(IUnitOfWork context, IMapper mapper, UserManager<SmartyUser> userManager, IToastNotification toastr)
+		public CreateModel(IUnitOfWork context, IMapper mapper, UserManager<SmartyUser> userManager, IToastNotification toastr, IInstructorService instuctorService)
 		{
 			_mapper = mapper;
 			_context = context;
 			_userManager = userManager;
 			_toastr = toastr;
+			_instuctorService = instuctorService;
 		}
 		[BindProperty]
 		public CourseGradeFormViewModel ViewModel { get; set; }
@@ -29,21 +33,14 @@ namespace Smarty.Pages.CourseGrades
 		public async Task<IActionResult> OnGet()
 		{
 			var instructorId = _userManager.GetUserAsync(User).Result.MemberId;
-			var courses = await _context.Courses.FindByCriteriaAsync(c => c.InstructorId == instructorId);
-
-			var selectListViewModel = _mapper.Map<IEnumerable<SelectCourseViewModel>>(courses);
-			SelectList = new SelectList(selectListViewModel, "Id", "Description");
+			SelectList = await _instuctorService.GetCoursesSelectListAsync(instructorId);
 			return Page();
 		}
 		public async Task<IActionResult> OnPost()
 		{
 
 			var instructorId = _userManager.GetUserAsync(User).Result.MemberId;
-
-			var courses = await _context.Courses.FindByCriteriaAsync(c => c.InstructorId == instructorId);
-			var selectListViewModel = _mapper.Map<IEnumerable<SelectCourseViewModel>>(courses);
-			SelectList = new SelectList(selectListViewModel, "Id", "Description");
-
+			SelectList = await _instuctorService.GetCoursesSelectListAsync(instructorId);
 
 			if (!ModelState.IsValid)
 				return Page();
