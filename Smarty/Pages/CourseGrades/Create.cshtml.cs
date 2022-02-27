@@ -65,9 +65,8 @@ namespace Smarty.Pages.CourseGrades
 			var courseGrade = _mapper.Map<CourseGrade>(ViewModel);
 			_context.CourseGrades.Add(courseGrade);
 			_context.SaveChanges();
-
 			_toastr.AddSuccessToastMessage("Course Grade Added Successfully");
-			return RedirectToPage("/CourseGrades/Index" , new {courseId = ViewModel.CourseId });
+			return RedirectToPage("/CourseGrades/Index" , new {selectedCourseId = ViewModel.CourseId });
 
 		}
 

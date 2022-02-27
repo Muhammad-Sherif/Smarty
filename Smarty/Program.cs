@@ -4,6 +4,7 @@ using NToastNotify;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Implementations;
 using Smarty.Data.Repositories.Interfaces;
+using Smarty.Data.Services;
 using Smarty.Data.SmartyDBContext;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,8 +14,8 @@ builder.Services.AddRazorPages()
     .AddNToastNotifyToastr(new ToastrOptions(){
         ProgressBar = true,PositionClass = ToastPositions.TopRight,
         PreventDuplicates = true,CloseButton = true});
-builder.Services.AddRazorPages();
 
+builder.Services.AddRazorPages();
 
 builder.Services.AddDefaultIdentity<SmartyUser> (options =>
 options.SignIn.RequireConfirmedAccount = false)
@@ -26,6 +27,7 @@ builder.Services.AddDbContext<SmartyDbContext>(
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IInstructorService, InstructorService>();
 
 
 var app = builder.Build();

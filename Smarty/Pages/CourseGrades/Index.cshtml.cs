@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Interfaces;
+using Smarty.Data.Services;
 using Smarty.Data.SmartyDBContext;
 using Smarty.Data.ViewModels.CourseGrades;
 
@@ -14,22 +15,27 @@ namespace Smarty.Pages.CourseGrades
     {
         private readonly IUnitOfWork _context;
         private readonly IMapper _mapper;
-        private readonly UserManager<SmartyUser> _userManager;
-		public IndexModel(IUnitOfWork context, IMapper mapper, UserManager<SmartyUser> userManager)
+        private readonly IInstructorService _instructorService;
+		private readonly UserManager<SmartyUser> _userManager;
+
+		public IndexModel(IUnitOfWork context,
+			IMapper mapper,
+			UserManager<SmartyUser> userManager,
+			IInstructorService instructorService)
 		{
 			_context = context;
 			_mapper = mapper;
 			_userManager = userManager;
+			_instructorService = instructorService;
 		}
+
 		public SelectList  SelectList;
-		public async Task<IActionResult> OnGet(int? courseId)
+
+		public async Task OnGet(int? selectedCourseId)
 		{
 			var instructorId = _userManager.GetUserAsync(User).Result.MemberId;
-			var courses = await _context.Courses.FindByCriteriaAsync(c => c.InstructorId == instructorId);
+			SelectList = await _instructorService.GetCoursesSelectListAsync(instructorId, selectedCourseId);
 
-			var selectListViewModel = _mapper.Map<IEnumerable<SelectCourseViewModel>>(courses);
-			SelectList = new SelectList(selectListViewModel , "Id" , "Description" , courseId);
-			return Page();
 		}
 		public async Task<IActionResult> OnGetGrades(int? courseId)
 		{

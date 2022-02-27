@@ -72,7 +72,7 @@ namespace Smarty.Pages.CourseGrades
 			_context.SaveChanges();
 
 			_toastr.AddSuccessToastMessage("Course Grade Edited Successfully");
-			return RedirectToPage("/CourseGrades/Index", new { courseId = ViewModel.CourseId });
+			return RedirectToPage("/CourseGrades/Index", new { selectedCourseId = ViewModel.CourseId });
 
 		}
 
