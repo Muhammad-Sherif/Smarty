@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Smarty.Data.Models;
 using Smarty.Data.ViewModels.CourseGrades;
+using Smarty.Data.ViewModels.Courses;
 using System;
 using System.Collections.Generic;
 using System.Linq;

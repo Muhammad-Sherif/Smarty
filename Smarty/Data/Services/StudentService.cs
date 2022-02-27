@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Interfaces;
 using Smarty.Data.ViewModels.CourseGrades;
+using Smarty.Data.ViewModels.Courses;
 
 namespace Smarty.Data.Services
 {
