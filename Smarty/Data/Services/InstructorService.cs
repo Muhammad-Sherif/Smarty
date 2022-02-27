@@ -21,11 +21,7 @@ namespace Smarty.Data.Services
 
 		public async Task<SelectList> GetCoursesSelectListAsync(int instructorId,int? selectedCourseId =null )
 		{
-			var courses = _context
-				.StudentsCourses
-				.FindByCriteriaAsync(c => c.StudentId == instructorId).Result
-				.Select(sc => sc.Course);
-
+			var courses = await _context.Courses.FindByCriteriaAsync(c => c.InstructorId == instructorId);
 			var selectListViewModel = _mapper.Map<IEnumerable<SelectCourseViewModel>>(courses);
 			return new SelectList(selectListViewModel, "Id", "Description", selectedCourseId);
 
