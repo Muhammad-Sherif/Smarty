@@ -105,7 +105,7 @@
                     ${element.maxValue}
                 </td>
                 <td class="action-link">
-                    <a class="edit" href="courseGrades/edit?courseId=${element.courseId}&name=${element.name}" title="Edit"  ><i class="fa fa-edit"></i></a>
+                    <a class="edit" href="courseGrades/edit/${element.courseId}/${element.name}" title="Edit"  ><i class="fa fa-edit"></i></a>
                     <a onclick="DeleteItem(${element.courseId} ,'${element.name}' )" class="delete"  href="#" title="Delete"><i class="fa fa-remove"></i></a>
                 </td>
             </tr>`;
