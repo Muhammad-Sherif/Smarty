@@ -15,6 +15,8 @@ namespace Smarty.Data.AutoMapper
 		{
 			CreateMap<StudentsGrades, StudentGradeViewModel>()
 				.ForMember(dest => dest.MaxValue, src => src.MapFrom(src => src.CourseGrade.MaxValue));
+			CreateMap<StudentsGrades, StudentGradeFormViewModel>().ReverseMap();
+
 		}
 	}
 }

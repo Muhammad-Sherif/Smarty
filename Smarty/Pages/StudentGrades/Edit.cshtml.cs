@@ -2,78 +2,89 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using NToastNotify;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Interfaces;
 using Smarty.Data.Services;
-using Smarty.Data.ViewModels.CourseGrades;
 using Smarty.Data.ViewModels.StudentGrades;
-using Smarty.Data.ViewModels.Students;
 
 namespace Smarty.Pages.StudentGrades
 {
-    public class EditModel : PageModel
-    {
+	public class EditModel : PageModel
+	{
 		private readonly IUnitOfWork _context;
 		private readonly IMapper _mapper;
+		private readonly IToastNotification _toastr;
 		private readonly UserManager<SmartyUser> _userManager;
-		private readonly IInstructorService _instructorService;
 
-		public EditModel(IUnitOfWork context, 
-			IMapper mapper, 
-			UserManager<SmartyUser> userManager, 
-			IInstructorService instructorService)
+		public EditModel(IUnitOfWork context,
+			IMapper mapper,
+			UserManager<SmartyUser> userManager,
+			IToastNotification toastr)
 		{
 			_context = context;
 			_mapper = mapper;
 			_userManager = userManager;
-			_instructorService = instructorService;
+			_toastr = toastr;
 		}
-
-		public SelectList SelectList;
-
-		public async Task OnGetAsync(int? selectedCourseId)
+		[BindProperty]
+		public StudentGradeFormViewModel ViewModel { get; set; }
+		public double MaxGradeValue { get; set; }
+		public async Task<IActionResult> OnGetAsync(int? studentId, int? courseId, string name)
 		{
-			var instructorId = _userManager.GetUserAsync(User).Result.MemberId;
-			SelectList = await _instructorService.GetCoursesSelectListAsync(instructorId, selectedCourseId);
-
-		}
-
-		public async Task<IActionResult> OnGetStudentsAsync(int? courseId)
-		{
-			if (courseId == null)
+			if (studentId == null || courseId == null || name == null)
 				return BadRequest();
 
 			var instructorId = _userManager.GetUserAsync(User).Result.MemberId;
-			var existedCourse = await _context.Courses.FirstOrDefaultAsync(c => c.Id == courseId && c.InstructorId == instructorId);
 
+			var existedCourse = await _context.Courses.FirstOrDefaultAsync(c => c.Id == courseId && c.InstructorId == instructorId);
 			if (existedCourse == null)
 				return NotFound();
 
-			var studentsCourses = await _context.StudentsCourses.FindByCriteriaAsync(sg => sg.CourseId == courseId , sg=>sg.Student);
-			var students = studentsCourses.Select(sc => sc.Student);
-			var SelectListViewModel = _mapper.Map<IEnumerable<SelectStudentViewModel>>(students);
-			return new JsonResult(SelectListViewModel);
+			var studentGrade = await _context.StudentsGrades.FirstOrDefaultAsync(sg =>
+			   sg.StudentId == studentId &&
+			   sg.CourseId == courseId && sg.Name == name,
+			   sg => sg.CourseGrade);
+
+			if (studentGrade == null)
+				return NotFound();
+
+			MaxGradeValue = studentGrade.CourseGrade.MaxValue;
+			ViewModel = _mapper.Map<StudentGradeFormViewModel>(studentGrade);
+			return Page();
+
 		}
-		public async Task<IActionResult> OnGetGradesAsync(int? courseId , int? studentId)
+		public async Task<IActionResult> OnPostAsync()
 		{
-			if (courseId == null)
-				return BadRequest();
+			if (!ModelState.IsValid)
+				return Page();
 
 			var instructorId = _userManager.GetUserAsync(User).Result.MemberId;
-			var existedCourse = await _context.Courses.FirstOrDefaultAsync(c => c.Id == courseId && c.InstructorId == instructorId);
-
+			var existedCourse = await _context.Courses.FirstOrDefaultAsync(c => c.Id == ViewModel.CourseId && c.InstructorId == instructorId);
 			if (existedCourse == null)
 				return NotFound();
 
-			var existedStudentCourse = await _context.StudentsCourses.FirstOrDefaultAsync(sc => sc.StudentId == studentId && sc.CourseId == courseId);
-			if (existedStudentCourse == null)
+			var studentGrade = await _context.StudentsGrades.FirstOrDefaultAsync(sg =>
+			   sg.StudentId == ViewModel.StudentId &&
+			   sg.CourseId == ViewModel.CourseId && sg.Name == ViewModel.Name,
+			   sg => sg.CourseGrade);
+
+			if (studentGrade == null)
 				return NotFound();
 
-			var studentGrades = await _context.StudentsGrades.FindByCriteriaAsync(sg => sg.StudentId == studentId && sg.CourseId == courseId , sg=>sg.CourseGrade);
-			var studentGradeViewModels = _mapper.Map<IEnumerable<StudentGradeViewModel>>(studentGrades);
-			return new JsonResult(studentGradeViewModels);
+			MaxGradeValue = studentGrade.CourseGrade.MaxValue;
+			if (ViewModel.Value > MaxGradeValue)
+			{
+				ModelState.AddModelError("", $"Grade must be not greater than {MaxGradeValue}");
+				return Page();
+			}
+			studentGrade = _mapper.Map(ViewModel, studentGrade);
+			_context.SaveChanges();
+			_toastr.AddSuccessToastMessage("Student Grade Edited Successfully");
+			return RedirectToPage("/StudentGrades/InstructorIndex");
+
 
 		}
+
 	}
 }
