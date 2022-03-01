@@ -18,7 +18,7 @@ namespace Smarty.Pages.CourseGrades
 		
         
 
-		public async Task<IActionResult> OnPost(int? courseId , string name)
+		public async Task<IActionResult> OnPostAsync(int? courseId , string name)
 		{
 			if (courseId == null || name == null)
 				return BadRequest();

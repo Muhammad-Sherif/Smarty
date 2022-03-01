@@ -30,13 +30,13 @@ namespace Smarty.Pages.StudentGrades
 
 		public SelectList SelectList;
 
-		public async Task OnGet(int? selectedCourseId)
+		public async Task OnGetAsync(int? selectedCourseId)
         {
             var studentId = _userManager.GetUserAsync(User).Result.MemberId;
             SelectList = await _studentService.GetCoursesSelectListAsync(studentId, selectedCourseId);
 
         }
-        public async Task<IActionResult> OnGetGrades(int? courseId)
+        public async Task<IActionResult> OnGetGradesAsync(int? courseId)
         {
             if (courseId == null)
                 BadRequest();

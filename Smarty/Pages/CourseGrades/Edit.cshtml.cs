@@ -25,7 +25,7 @@ namespace Smarty.Pages.CourseGrades
 		}
 		[BindProperty]
 		public CourseGradeFormViewModel ViewModel { get; set; }
-		public async Task<IActionResult> OnGet(int? courseId , string name)
+		public async Task<IActionResult> OnGetAsync(int? courseId , string name)
 		{
 
 			var instructorId = _userManager.GetUserAsync(User).Result.MemberId;
@@ -45,7 +45,7 @@ namespace Smarty.Pages.CourseGrades
 			ViewModel = _mapper.Map<CourseGradeFormViewModel>(existedGrade);
 			return Page();
 		}
-		public async Task<IActionResult> OnPost()
+		public async Task<IActionResult> OnPostAsync()
 		{
 
 

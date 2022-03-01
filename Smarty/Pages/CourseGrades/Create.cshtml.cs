@@ -30,13 +30,13 @@ namespace Smarty.Pages.CourseGrades
 		[BindProperty]
 		public CourseGradeFormViewModel ViewModel { get; set; }
 		public SelectList SelectList { get; set; }
-		public async Task<IActionResult> OnGet()
+		public async Task<IActionResult> OnGetAsync()
 		{
 			var instructorId = _userManager.GetUserAsync(User).Result.MemberId;
 			SelectList = await _instuctorService.GetCoursesSelectListAsync(instructorId);
 			return Page();
 		}
-		public async Task<IActionResult> OnPost()
+		public async Task<IActionResult> OnPostAsync()
 		{
 
 			var instructorId = _userManager.GetUserAsync(User).Result.MemberId;

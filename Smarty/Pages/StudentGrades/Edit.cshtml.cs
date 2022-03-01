@@ -32,14 +32,14 @@ namespace Smarty.Pages.StudentGrades
 
 		public SelectList SelectList;
 
-		public async Task OnGet(int? selectedCourseId)
+		public async Task OnGetAsync(int? selectedCourseId)
 		{
 			var instructorId = _userManager.GetUserAsync(User).Result.MemberId;
 			SelectList = await _instructorService.GetCoursesSelectListAsync(instructorId, selectedCourseId);
 
 		}
 
-		public async Task<IActionResult> OnGetStudents(int? courseId)
+		public async Task<IActionResult> OnGetStudentsAsync(int? courseId)
 		{
 			if (courseId == null)
 				return BadRequest();
@@ -55,7 +55,7 @@ namespace Smarty.Pages.StudentGrades
 			var SelectListViewModel = _mapper.Map<IEnumerable<SelectStudentViewModel>>(students);
 			return new JsonResult(SelectListViewModel);
 		}
-		public async Task<IActionResult> OnGetGrades(int? courseId , int? studentId)
+		public async Task<IActionResult> OnGetGradesAsync(int? courseId , int? studentId)
 		{
 			if (courseId == null)
 				return BadRequest();
