@@ -54,7 +54,7 @@ namespace Smarty.Pages.Courses
 
             _toastr.AddSuccessToastMessage("Course Added Successfully");
 
-            return RedirectToPage("/Index");
+            return RedirectToPage("/Courses/Index");
         }
 
     }
