@@ -239,10 +239,7 @@ textarea {
 .dash-item .inner-item {
   padding: 30px;
 }
-.dash-item .inner-item img {
-  max-width: 40px;
-  border-radius: 50%;
-}
+
 .dash-item .inner-item .title {
   font-weight: 600;
   font-size: 13px;
@@ -875,6 +872,9 @@ table.dataTable > tbody > tr.child span.dtr-title i {
   margin-right: 5px;
   font-size: 10px;
 }
+.action-link .qr {
+    background: #27ae60;
+}
 .action-link .edit {
   background: #27ae60;
 }
@@ -893,6 +893,8 @@ table.dataTable > tbody > tr.child span.dtr-title i {
 .action-link .bg-green {
   background: #27ae60;
 }
+
+
 @media (max-width: 991px) {
   .dash-search-form label {
     margin-top: 15px;
