@@ -43,6 +43,12 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
                 .HasForeignKey(cg => cg.CourseId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder
+                .HasMany(c => c.CourseAttendance)
+                .WithOne(cg => cg.Course)
+                .HasForeignKey(cg => cg.CourseId)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
         }
 

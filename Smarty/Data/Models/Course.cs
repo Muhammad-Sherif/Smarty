@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +23,7 @@ namespace Smarty.Data.Models
         public ICollection<Lab> Labs { get; set; }
 
         public ICollection<CourseGrade> CourseGrades { get; set; }
+        public ICollection<CourseAttendance> CourseAttendance { get; set; }
         public ICollection<Student> Students{ get; set; }
         public ICollection<StudentsCourses> StudentsCourses{ get; set; }
 
