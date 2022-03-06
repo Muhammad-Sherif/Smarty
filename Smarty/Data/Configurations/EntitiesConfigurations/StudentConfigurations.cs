@@ -79,8 +79,26 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
 					.HasKey(t => new { t.StudentId, t.CourseId, t.Name })
 					);
 
+            builder
+                .HasMany(s => s.CoursesAttendances)
+                .WithMany(ca => ca.Students)
+                .UsingEntity<StudentsAttendances>(
+                    j => j
+                    .HasOne(sa=> sa.CourseAttendance)
+                    .WithMany(ca => ca.StudentsAttendances)
+                    .HasForeignKey(sa => new { sa.DateTime, sa.CourseId })
+                    .OnDelete(DeleteBehavior.Cascade),
+                    j => j
+                    .HasOne(sa => sa.Student)
+                    .WithMany(s => s.StudentsAttendances)
+                    .HasForeignKey(sa=> sa.StudentId)
+                    .OnDelete(DeleteBehavior.Restrict),
+                    j => j
+                    .HasKey(t => new { t.StudentId, t.CourseId, t.DateTime})
+                    );
 
-		}
+
+        }
 
 
     }

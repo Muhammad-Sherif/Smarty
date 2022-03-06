@@ -9,5 +9,8 @@
         public double Longitude { get; set; }
 
         public Course Course { get; set; }
+        public ICollection<StudentsAttendances> StudentsAttendances { get; set; }
+        public ICollection<Student> Students { get; set; }
+
     }
 }

@@ -15,6 +15,7 @@ namespace Smarty.Data.Repositories.Implementations
 		public IGenericRepository<CourseGrade> CourseGrades{ get; private set; }
 		public IGenericRepository<CourseAttendance> CourseAttendances{ get; private set; }
 		public IGenericRepository<StudentsGrades> StudentsGrades{ get; private set; }
+		public IGenericRepository<StudentsAttendances> StudentsAttendances{ get; private set; }
 		public IGenericRepository<StudentsCourses> StudentsCourses { get; private set; }
 
 		public IGenericRepository<Lab> Labs { get; private set; }
@@ -32,6 +33,7 @@ namespace Smarty.Data.Repositories.Implementations
 			StudentsCourses = new GenericRepository<StudentsCourses>(_context);
 			StudentsGrades = new GenericRepository<StudentsGrades>(_context);
 			CourseAttendances = new GenericRepository<CourseAttendance>(_context);
+			StudentsAttendances= new GenericRepository<StudentsAttendances>(_context);
 
 		}
 		public void Dispose()
