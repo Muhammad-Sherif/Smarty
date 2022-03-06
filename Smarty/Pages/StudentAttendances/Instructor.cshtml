@@ -1,0 +1,170 @@
+﻿@page
+@model InstructorModel
+@{
+    ViewData["Title"] = "Student Attendances";
+}
+
+
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12 clear-padding-xs">
+            <h5 class="page-title"><i class="fa fa-sliders"></i>STUDENT ATTENDANCES</h5>
+            <div class="section-divider"></div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-12 clear-padding-xs">
+
+            <div class="col-lg-12">
+                <div class="dash-item first-dash-item">
+                    <h6 class="item-title"><i class="fa fa-search"></i>INFO</h6>
+                    <div class="inner-item dash-form ">
+                        <div class="col-sm-3">
+                            <label for="courseId">Courses</label>
+                            <select id="courseId" asp-items="Model.SelectList">
+                                <option value="">Select Course</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="studentId">Students</label>
+                            <select id="studentId" >
+                                <option value="">Select Student</option>
+                            </select>
+                        </div>
+                        
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+
+
+
+                <div class="dash-item">
+
+                    <h6 class="item-title"><i class="fa fa-sliders"></i>STUDENT GRADES</h6>
+                    <div class="inner-item">
+                        <table id="dataTable" class="display responsive nowrap" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th><i class="fa fa-sliders"></i>Date</th>
+                                    <th><i class="fa fa-sliders"></i>Status</th>
+                                    <th><i class="fa fa-tasks"></i>Remarks</th>
+                                    <th><i class="fa fa-tasks"></i>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+<script>
+    
+    function FillSelectList(data)
+    {
+        console.log(data);
+        var selectList = $('#studentId');
+        selectList.find('option').not(':first').remove();
+        $.each(data, function (index , element) {
+            var option = `<option value="${element.id}">${element.fullName}</option>`;
+            selectList.append(option);
+        });
+
+    }
+    function StudentsAjaxCall()
+    {
+        var selectedValue = $('#courseId').val();
+        if(selectedValue !== '') {
+            $.ajax({
+                url:`/studentAttendances/instructor?handler=students&courseId=${selectedValue}`,
+                type:'GET',
+                success:function(data) {
+                    FillSelectList(data);
+                },
+                error:function(error)   {
+                    toastr.error('Something goes wrong');
+
+                }
+            });
+        }
+        else
+        {
+            $('#studentId').find('option').not(':first').remove();
+            $('#dataTable').DataTable().clear().destroy();
+            $('#dataTable').DataTable();
+        }
+        
+    }
+
+    function FillTableBody(data)
+    {
+        
+        $('#dataTable').DataTable().clear().destroy();
+        var tableBody = $('table tbody');
+        $.each(data, function (index , element) {
+            var row =
+            `<tr>
+                <td>
+                    ${element.displayDateTime}
+                </td>
+                <td>
+                    ${element.status}
+                </td>
+                <td>
+                    ${element.remarks}
+                </td>
+                <td class="action-link">
+                    <a  class="edit" href="/studentAttendances/edit/${element.studentId}/${element.courseId}/${element.urlDateTime}" title="Edit"  ><i class="fa fa-edit"></i></a>
+                </td>
+            </tr>`;
+            tableBody.append(row);
+        });
+        $('#dataTable').DataTable();
+
+    }
+    function AttendancesAjaxCall()
+    {
+        var courseSelectedValue = $('#courseId').val();
+        var studentSelectedValue = $('#studentId').val();
+        if(studentSelectedValue !== '') {
+            $.ajax({
+                url:`/studentAttendances/instructor?handler=attendances&courseId=${courseSelectedValue}&studentId=${studentSelectedValue}`,
+                type:'GET',
+                success:function(data) {
+                    FillTableBody(data);
+                },
+                error:function(error)   {
+                    toastr.error('Something goes wrong');
+
+                }
+            });
+        }
+        else {
+            $('#dataTable').DataTable().clear().destroy();
+            $('#dataTable').DataTable();
+        }
+    }
+
+
+    $(document).ready(function () {
+        StudentsAjaxCall(); // get the studnet  data if the dropdown have a default value 
+        $('#courseId').on('change' , () => StudentsAjaxCall());
+        $('#studentId').on('change' , () => AttendancesAjaxCall());
+    });
+</script>
+
+}
+
