@@ -1,4 +1,173 @@
 ﻿@page
-@model Smarty.Pages.Courses.IndexModel
+@model IndexModel
 @{
+    ViewData["Title"] = "Courses";
 }
+
+
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12 clear-padding-xs">
+            <h5 class="page-title"><i class="fa fa-sliders"></i>COURSES</h5>
+            <div class="section-divider"></div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-12 clear-padding-xs">
+
+            <div class="col-lg-12">
+                <div class="dash-item first-dash-item">
+                    <h6 class="item-title"><i class="fa fa-search"></i>CREATE NEW COURSE</h6>
+                    <div class="inner-item dash-form ">
+                        <div class="col-sm-3">
+                            <a  asp-page="Create">CREATE</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-lg-12">
+
+                <div class="dash-item">
+
+                    <h6 class="item-title"><i class="fa fa-sliders"></i>COURSES</h6>
+                    <div class="inner-item">
+                        <table id="dataTable" class="display responsive nowrap" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th><i class="fa fa-sliders"></i>NAME</th>
+                                    <th><i class="fa fa-code"></i>CODE</th>
+                                    <th><i class="fa fa-sliders"></i>DESCRIPTION</th>
+                                    <th><i class="fa fa-calendar"></i>DAY</th>
+                                    <th><i class="fa fa-clock-o"></i>TIME</th>
+                                    <th><i class="fa fa-code"></i>CODES</th>
+                                    <th><i class="fa fa-tasks"></i>EDIT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var course in Model.ViewModel)
+                                {
+                                    <tr>
+                                        <td>@course.Name</td>
+                                        <td>@course.Code</td>
+                                        <td>@(course.Description == null ? "No Description" : course.Description) </td>
+                                        <td>@course.Day</td>
+                                        <td>@course.Time</td>
+                                        <td class="action-link">
+                                            <a onclick="ShowRegisterCode('@course.RegisterCode')"class="bg-red" href="#" title="RegisterCode" data-toggle="modal" data-target="#registerCodeModal"><i class="fa fa-code"></i></a>
+                                            <a onclick="ShowAccessCode('@course.AccessCode')"class="bg-red" href="#" title="AccessCode" data-toggle="modal" data-target="#accessCodeModal"><i class="fa fa-key"></i></a>
+                                        </td>
+                                        <td class="action-link">
+                                            <a class="edit" asp-page="/Courses/Edit" asp-route-id="@course.Id" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <a onclick="DeleteItem(@course.Id)" class="delete" href="#" title="Delete"><i class="fa fa-remove"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--RegisterCode-->
+<div id="registerCodeModal" class="modal fade" role="dialog">
+
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-code"></i>REGISTER CODE</h4>
+            </div>
+            <div class="modal-body dash-form ">
+                <div class="col-sm-12 ">
+                    <h3></h3>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="table-action-box">
+                    <a href="#" class="cancel" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--AccessCode-->
+<div id="accessCodeModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-key"></i>ACCESS CODE</h4>
+            </div>
+            <div class="modal-body dash-form ">
+                <div class="col-sm-12 ">
+                    <h3></h3>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="table-action-box">
+                    <a href="#" class="cancel" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+<script>
+    function DeleteItem(courseId)
+    {
+            event.preventDefault();
+            var row = $(event.target).parents('tr');
+            $.ajax({
+                url:'/courses/delete',
+                method:'POST',
+                headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                data:{courseId:courseId},
+                success:function() {
+                    row.fadeOut('slow' , function() {
+                        row.remove();
+                        toastr.success('Item removed successfully');
+
+                    });
+                },
+                error:function()   {
+                    toastr.error('Something goes wrong');
+                }
+            });
+    }
+
+    function ShowRegisterCode(code)
+    {
+        var modalContent = $('#registerCodeModal .modal-body h3');
+        modalContent.html(code);
+    }
+    function ShowAccessCode(code)
+    {
+        var modalContent = $('#accessCodeModal .modal-body h3');
+        modalContent.html(code);
+    }
+</script>
+
+}
+

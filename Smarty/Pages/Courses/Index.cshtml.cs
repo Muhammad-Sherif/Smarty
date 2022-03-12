@@ -15,7 +15,6 @@ namespace Smarty.Pages.Courses
         private readonly IUnitOfWork _context;
         private readonly IToastNotification _toastr;
         private readonly UserManager<SmartyUser> _userManager;
-        
         public IndexModel(IUnitOfWork context, IMapper mapper, UserManager<SmartyUser> userManager, IToastNotification toastr)
         {
             _mapper = mapper;
@@ -23,15 +22,15 @@ namespace Smarty.Pages.Courses
             _userManager = userManager;
             _toastr = toastr;
         }
+		public IEnumerable<InstructorCourseViewModel> ViewModel { get; set; }
 
-
-        public async Task<IActionResult> OnGetAsync()
+		public async Task OnGetAsync()
         {
-            var instructorId = _userManager.GetUserAsync(User).Result.MemberId;
-            var courses = await _context.Courses.GetAllAsync();
-            var coursesViewModel = _mapper.Map<IEnumerable<CourseViewModel>>(courses);
-            return new JsonResult(coursesViewModel);
-        }
+			var instructorId = _userManager.GetUserAsync(User).Result.MemberId;
+			var courses = await _context.Courses.FindByCriteriaAsync(c => c.InstructorId == instructorId);
+            ViewModel = _mapper.Map<IEnumerable<InstructorCourseViewModel>>(courses);
 
-    }
+		}
+
+	}
 }
