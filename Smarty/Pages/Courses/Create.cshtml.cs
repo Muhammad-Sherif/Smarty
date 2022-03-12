@@ -25,7 +25,7 @@ namespace Smarty.Pages.Courses
         }
 
         [BindProperty]
-        public CourseViewModel ViewModel { get; set; }
+        public CourseFormViewModel ViewModel { get; set; }
 
 
         public void OnGet()
@@ -54,7 +54,7 @@ namespace Smarty.Pages.Courses
 
             _toastr.AddSuccessToastMessage("Course Added Successfully");
 
-            return RedirectToPage("/Courses/Index");
+            return RedirectToPage("Index");
         }
 
     }

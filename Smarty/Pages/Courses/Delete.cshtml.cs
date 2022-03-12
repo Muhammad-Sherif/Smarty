@@ -16,19 +16,17 @@ namespace Smarty.Pages.Courses
 			_userManager = userManager;
 		}
 
+
 		public async Task<IActionResult> OnPostAsync(int? courseId)
 		{
 			if (courseId == null)
 				return BadRequest();
 
 			var instructorId = _userManager.GetUserAsync(User).Result.MemberId;
-			var course = await _context.Courses.FindByKeyAsync(courseId);
+			var course = await _context.Courses.FirstOrDefaultAsync(c=>c.Id==courseId &&  c.InstructorId == instructorId);
 
 			if (course == null)
 				return NotFound();
-
-			if (course.InstructorId != instructorId)
-				return BadRequest();
 
 			_context.Courses.Delete(course);
 			_context.SaveChanges();
