@@ -1,0 +1,101 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Courses";
+}
+
+
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12 clear-padding-xs">
+            <h5 class="page-title"><i class="fa fa-sliders"></i>COURSES</h5>
+            <div class="section-divider"></div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-12 clear-padding-xs">
+            <div class="col-lg-12">
+                <div class="dash-item first-dash-item">
+                    <h6 class="item-title"><i class="fa fa-search"></i>REGISTER IN NEW COURSE</h6>
+                    <div class="inner-item dash-form ">
+                        <div class="col-sm-3">
+                            <a  asp-page="Register">REGISTER</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-12">
+
+                <div class="dash-item">
+
+                    <h6 class="item-title"><i class="fa fa-sliders"></i>COURSES</h6>
+                    <div class="inner-item">
+                        <table id="dataTable" class="display responsive nowrap" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th><i class="fa fa-sliders"></i>NAME</th>
+                                    <th><i class="fa fa-code"></i>CODE</th>
+                                    <th><i class="fa fa-sliders"></i>DESCRIPTION</th>
+                                    <th><i class="fa fa-calendar"></i>DAY</th>
+                                    <th><i class="fa fa-clock-o"></i>TIME</th>
+                                    <th><i class="fa fa-tasks"></i>UN REGISTER</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var course in Model.ViewModel)
+                                {
+                                    <tr>
+                                        <td>@course.Name</td>
+                                        <td>@course.Code</td>
+                                        <td>@(course.Description == null ? "No Description" : course.Description) </td>
+                                        <td>@course.Day</td>
+                                        <td>@course.Time</td>
+                                        <td class="action-link">
+                                            <a onclick="UnRegister(@course.Id)" class="delete" href="#" title="Un register"><i class="fa fa-remove"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+
+<script>
+    function UnRegister(courseId)
+    {
+        event.preventDefault();
+        var row = $(event.target).parents('tr');
+        $.ajax({
+            url:'/studentCourses/unregister',
+            method:'POST',
+            headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+            data:{courseId:courseId},
+            success:function() {
+                row.fadeOut('slow' , function() {
+                    row.remove();
+                    toastr.success('Un register done successfully');
+
+                });
+            },
+            error:function()   {
+                toastr.error('Something goes wrong');
+            }
+        });
+    }
+</script>
+
+}
