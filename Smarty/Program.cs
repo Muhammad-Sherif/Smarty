@@ -6,6 +6,7 @@ using Smarty.Data.Repositories.Implementations;
 using Smarty.Data.Repositories.Interfaces;
 using Smarty.Data.Services;
 using Smarty.Data.SmartyDBContext;
+using Smarty.Data.Triggers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,9 +22,14 @@ builder.Services.AddDefaultIdentity<SmartyUser> (options =>
 options.SignIn.RequireConfirmedAccount = false)
 .AddEntityFrameworkStores<SmartyDbContext>();
 
-builder.Services.AddDbContext<SmartyDbContext>(
-    options => options.UseSqlServer(
-        builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddDbContext<SmartyDbContext>( options => 
+{ 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+    options.UseTriggers(triggerOptions => triggerOptions.AddTrigger<AddRelatedCourseAttendanceDataTrigger>()); 
+    options.UseTriggers(triggerOptions => triggerOptions.AddTrigger<AddRelatedCourseGradeDataTrigger>()); 
+    options.UseTriggers(triggerOptions => triggerOptions.AddTrigger<AddRelatedStudentsCoursesDataTrigger1>()); 
+    options.UseTriggers(triggerOptions => triggerOptions.AddTrigger<AddRelatedStudentsCoursesDataTrigger2>()); 
+});
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
