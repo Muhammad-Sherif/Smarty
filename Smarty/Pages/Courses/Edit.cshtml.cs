@@ -24,42 +24,49 @@ namespace Smarty.Pages.Courses
         }
 
         [BindProperty]
-        public int Id { get; set; }
+        public int? CourseId { get; set; }
 
         [BindProperty]
-        public CourseViewModel ViewModel { get; set; }
+        public CourseFormViewModel ViewModel { get; set; }
 
-        public void OnGet(int id)
+        public async Task<IActionResult> OnGet(int? id)
         {
-            Id = id;
-            ViewModel = _mapper.Map<CourseViewModel>(_context.Courses.FindByKey(id));
+            if (id == null)
+                return BadRequest();
+            var instructorId = _userManager.GetUserAsync(User).Result.MemberId;
+
+            var course = await _context.Courses.FirstOrDefaultAsync(c=>c.Id == id && c.InstructorId == instructorId);
+            if (course == null)
+                return NotFound();
+
+            ViewModel = _mapper.Map<CourseFormViewModel>(course);
+            CourseId = id;
+            return Page();
         }
 
-        public IActionResult OnPostAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
-            var course = _context.Courses.FindByKey(Id);
-            course = _mapper.Map<Course>(ViewModel);
 
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            var existedCourse = _context.Courses.FirstOrDefault(c => c.Code == course.Code);
-            if (existedCourse != null && existedCourse.Id != Id)
+            var instructorId = _userManager.GetUserAsync(User).Result.MemberId;
+            var course = await _context.Courses.FirstOrDefaultAsync(c => c.Id == CourseId && c.InstructorId == instructorId);
+            if (course == null)
+                return NotFound();
+
+            var existedCodeCourse = _context.Courses.FirstOrDefault(c => c.Code == course.Code && c.Id != CourseId);
+            if (existedCodeCourse != null)
             {
-                ModelState.AddModelError(string.Empty, "This course code is used for another course");
+                ModelState.AddModelError(string.Empty, "This course code is used for another courses");
                 return Page();
             }
-
-            var instructorId = _userManager.GetUserAsync(User).Result.MemberId;
-            course.InstructorId = instructorId;
-            _context.Courses.Update(course);
+            course = _mapper.Map(ViewModel,course);
             _context.SaveChanges();
-
             _toastr.AddSuccessToastMessage("Course Updated Successfully");
-
-            return RedirectToPage("/Index");
+            return RedirectToPage("Index");
         }
 
 
