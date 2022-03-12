@@ -8,9 +8,12 @@ namespace Smarty.Data.AutoMapper
     {
         public CourseProfile()
         {
-            CreateMap<CourseViewModel, Course>()
+            CreateMap<CourseFormViewModel, Course>()
                 .ForMember(dest=>dest.RegisterCode , option=>option.MapFrom(o=>Guid.NewGuid()))
                 .ForMember(dest=>dest.AccessCode, option =>option.MapFrom(o=> Guid.NewGuid()));
+            CreateMap<Course, CourseFormViewModel>();
+            CreateMap<Course, InstructorCourseViewModel>();
+            CreateMap<Course, StudentCourseViewModel>();
 
 
         }
