@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using NToastNotify;
+using Smarty.Data.Configurations.MailSettingsConfigurations;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Implementations;
 using Smarty.Data.Repositories.Interfaces;
 using Smarty.Data.Services;
+using Smarty.Data.Services.Implementations;
 using Smarty.Data.SmartyDBContext;
 using Smarty.Data.Triggers;
 
@@ -19,7 +22,7 @@ builder.Services.AddRazorPages()
 builder.Services.AddRazorPages();
 
 builder.Services.AddDefaultIdentity<SmartyUser> (options =>
-options.SignIn.RequireConfirmedAccount = false)
+options.SignIn.RequireConfirmedAccount = true)
 .AddEntityFrameworkStores<SmartyDbContext>();
 
 builder.Services.AddDbContext<SmartyDbContext>( options => 
@@ -30,11 +33,12 @@ builder.Services.AddDbContext<SmartyDbContext>( options =>
     options.UseTriggers(triggerOptions => triggerOptions.AddTrigger<AddRelatedStudentsCoursesDataTrigger1>()); 
     options.UseTriggers(triggerOptions => triggerOptions.AddTrigger<AddRelatedStudentsCoursesDataTrigger2>()); 
 });
-
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IInstructorService, InstructorService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 
 var app = builder.Build();
