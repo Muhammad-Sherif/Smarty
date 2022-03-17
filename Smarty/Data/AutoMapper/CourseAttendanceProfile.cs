@@ -18,6 +18,9 @@ namespace Smarty.Data.AutoMapper
             CreateMap<CourseAttendance, CourseAttendanceViewModel>()
                 .ForMember(dest => dest.UrlDateTime, options => options.MapFrom(src => src.DateTime.ToString("M-d-yyyy")))
                 .ForMember(dest => dest.DisplayDateTime, options => options.MapFrom(src => src.DateTime.ToString("dddd, dd MMMM yyyy")));
+
+            CreateMap<CourseAttendance, CourseAttendanceEditFormViewModel>().ReverseMap();
+
         }
 
     }

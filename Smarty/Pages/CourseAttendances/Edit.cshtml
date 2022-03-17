@@ -1,0 +1,52 @@
+﻿@page "{courseId}/{dateTime}"
+@model EditModel
+@{
+}
+
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12 clear-padding-xs">
+            <h5 class="page-title"><i class="fa fa-user-secret"></i> COURSE ATTENDANCE EDIT </h5>
+            <div class="section-divider"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 clear-padding-xs">
+            <div class="col-md-12">
+                <div class="dash-item first-dash-item">
+                    <h6 class="item-title"><i class="fa fa-user"></i>COURSE INFO</h6>
+                    <form id="formAttendance" method="post">
+                        <div class="inner-item">
+                            <div asp-validation-summary="ModelOnly" class="Dash-form text-danger"></div>
+                            <div class="dash-form">
+                                <input type="hidden" asp-for="ViewModel.DateTime" />
+                                <input type="hidden" asp-for="ViewModel.CourseId" />
+                                <div class="col-sm-3">
+                                    <label asp-for="ViewModel.AcceptedScanDistance" class="clear-top-margin"><i class="fa fa-book"></i>Accepted Scan Distance</label>
+                                    <input asp-for="ViewModel.AcceptedScanDistance" />
+                                    <span asp-validation-for="ViewModel.AcceptedScanDistance" class="text-danger"></span>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-sm-3">
+                                    <div class="checkbox">
+                                        <label asp-for="ViewModel.QRCodeEnabled">
+                                            <input asp-for="ViewModel.QRCodeEnabled" />
+                                            Enable Qr code Scan ?
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <button id="submit" type="submit">EDIT</button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

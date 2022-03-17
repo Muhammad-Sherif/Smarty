@@ -112,8 +112,8 @@
                     <a style="background:#67746c;" class="qr" href="courseAttendances/qrCode/${element.courseId}/${element.urlDateTime}" title="QR CODE"  ><i class="fa fa-qrcode"></i></a>
                 </td>
                 <td class="action-link">
-                    <a class="edit" href="courseGrades/qrCode/${element.courseId}/${element.urlDataTime}" title="Edit"  ><i class="fa fa-edit"></i></a>
-                    <a onclick="DeleteItem(${element.courseId} ,'${element.urlDataTime}' )" class="delete"  href="#" title="Delete"><i class="fa fa-remove"></i></a>
+                    <a class="edit" href="courseAttendances/edit/${element.courseId}/${element.urlDateTime}" title="Edit"  ><i class="fa fa-edit"></i></a>
+                    <a onclick="DeleteItem(${element.courseId} ,'${element.urlDateTime}' )" class="delete"  href="#" title="Delete"><i class="fa fa-remove"></i></a>
                 </td>
             </tr>`;
             tableBody.append(row);
