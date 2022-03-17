@@ -36,7 +36,9 @@
                                     <span asp-validation-for="ViewModel.DateTime" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-3">
-                                    <input id="testInput" type="text"  />
+                                    <label asp-for="ViewModel.AcceptedScanDistance" class="clear-top-margin"><i class="fa fa-book"></i>Accepted Scan Distance</label>
+                                    <input  asp-for="ViewModel.AcceptedScanDistance" />
+                                    <span asp-validation-for="ViewModel.AcceptedScanDistance" class="text-danger"></span>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="col-sm-12">

@@ -4,6 +4,7 @@
     {
         public int CourseId { get; set; }
         public string DisplayDateTime { get; set; }
+        public double AcceptedScanDistance { get; set; }
         public string UrlDateTime { get; set; }
         public bool QRCodeEnabled { get; set; }
 

@@ -50,6 +50,7 @@
                                 <tr>
                                     <th><i class="fa fa-sliders"></i>Date</th>
                                     <th><i class="fa fa-sliders"></i>QRCode Scan Enabled</th>
+                                    <th><i class="fa fa-tasks"></i>Accepted Scan Distance</th>
                                     <th><i class="fa fa-tasks"></i>QRCode Scan</th>
                                     <th><i class="fa fa-tasks"></i>Edit</th>
                                 </tr>
@@ -103,6 +104,9 @@
                 </td>
                 <td>
                     ${element.qrCodeEnabled}
+                </td>
+                <td>
+                    ${element.acceptedScanDistance}
                 </td>
                 <td class="action-link">
                     <a style="background:#67746c;" class="qr" href="courseAttendances/qrCode/${element.courseId}/${element.urlDateTime}" title="QR CODE"  ><i class="fa fa-qrcode"></i></a>

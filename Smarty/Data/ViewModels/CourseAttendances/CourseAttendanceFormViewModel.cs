@@ -12,6 +12,8 @@ namespace Smarty.Data.ViewModels.CourseAttendances
         [Required]
         public int CourseId { get; set; }
         [Required]
+        public double AcceptedScanDistance{ get; set; }
+        [Required]
         public DateTime DateTime { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }

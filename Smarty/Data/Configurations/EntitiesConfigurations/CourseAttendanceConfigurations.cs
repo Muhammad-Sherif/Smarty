@@ -19,6 +19,7 @@ namespace Smarty.Data.Configurations.EntitiesConfigurations
         {
             builder.HasKey(ca => new { ca.DateTime, ca.CourseId});
             builder.Property(ca => ca.QRCodeEnabled).HasDefaultValue(1);
+            builder.Property(ca => ca.AcceptedScanDistance).IsRequired();
         }
         
     }
