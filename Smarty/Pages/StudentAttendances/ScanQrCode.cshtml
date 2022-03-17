@@ -1,0 +1,61 @@
+﻿@page
+@model ScanQrCodeModel
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12 clear-padding-xs">
+            <h5 class="page-title"><i class="fa fa-user-secret"></i> COURSE ATTENDANCE</h5>
+            <div class="section-divider"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 clear-padding-xs">
+            <div class="col-md-12">
+                <div class="dash-item first-dash-item">
+                    <h6 class="item-title"><i class="fa fa-user"></i>INFO</h6>
+                    <form id="formAttendance" method="post">
+                        <div class="inner-item">
+                            <div asp-validation-summary="ModelOnly" class="Dash-form text-danger"></div>
+                            <input id="Latitude" name="ViewModel.Latitude" type="hidden" />
+                            <input id="Longitude" name="ViewModel.Longitude" type="hidden" />
+                            <input type="hidden" asp-for="ViewModel.DateTime" />
+                            <input type="hidden"  asp-for="ViewModel.CourseId" />
+                            <div class="dash-form">
+                                <div class="col-sm-12">
+                                    <button id="submit" type="submit">TAKE ATTENDANCE</button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<script>
+    let locationAccessErrorUrl = "@Model.LocationAccessErrorUrl";
+
+    const successCallBack = (position) => {
+        $("#Latitude").val(position.coords.latitude);
+        $("#Longitude").val(position.coords.longitude);
+    };
+    const errorCallBack = (error) => {
+        window.location.replace(`${locationAccessErrorUrl}?codeError=${error.code}`);
+    };
+
+
+    $("document").ready(function (){
+        navigator.geolocation.getCurrentPosition(successCallBack , errorCallBack );
+
+    });
+
+
+</script>
+
+}

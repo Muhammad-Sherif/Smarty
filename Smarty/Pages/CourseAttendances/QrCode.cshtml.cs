@@ -39,7 +39,7 @@ namespace Smarty.Pages.CourseAttendances
 				return NotFound();
 
 			QrCodeUrl = Url.Page(
-				pageName:"/CourseAttendances/Index",
+				pageName:"/StudentAttendances/ScanQrCode",
 				pageHandler:null,
 				values: new { courseId = courseAttendance.CourseId, dateTime = courseAttendance.DateTime.ToString("M-d-yyyy") },
 				protocol: Request.Scheme);
