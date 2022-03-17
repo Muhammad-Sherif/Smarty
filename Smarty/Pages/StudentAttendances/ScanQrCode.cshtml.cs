@@ -80,23 +80,27 @@ namespace Smarty.Pages.StudentAttendances
 
 			var courseAttendance = await _context.CourseAttendances.FindByKeyAsync(ViewModel.DateTime, ViewModel.CourseId);
 
-			var distanceInMeters = GeoCalculator.GetDistance(
+			if(!courseAttendance.QRCodeEnabled)
+			{
+				_toastr.AddErrorToastMessage("Qr code scan disabled");
+				return RedirectToPage("/StudentAttendances/Student", new { selectedCourseId = ViewModel.CourseId });
+			}
+
+			var distanceBetweenInstructorAndStudent = GeoCalculator.GetDistance(
 				ViewModel.Latitude,ViewModel.Longitude , 
 				courseAttendance.Latitude , courseAttendance.Longitude
 				,2
 				,DistanceUnit.Meters
 				);
 
-
-			if(distanceInMeters <= AcceptedDistanceInMeters)
+			if(distanceBetweenInstructorAndStudent > courseAttendance.AcceptedScanDistance)
 			{
-				studentAttendance.Status = AttendanceStatus.Present.ToString();
-				_context.SaveChanges();
-				_toastr.AddSuccessToastMessage("Attendance done successfully");
-			}
-			else
 				_toastr.AddErrorToastMessage("you should be in lecture to take attendance");
-
+				return RedirectToPage("/StudentAttendances/Student", new { selectedCourseId = ViewModel.CourseId });
+			}
+			studentAttendance.Status = AttendanceStatus.Present.ToString();
+			_context.SaveChanges();
+			_toastr.AddSuccessToastMessage("Attendance taked successfully");
 			return RedirectToPage("/StudentAttendances/Student", new { selectedCourseId = ViewModel.CourseId });
 
 		}
