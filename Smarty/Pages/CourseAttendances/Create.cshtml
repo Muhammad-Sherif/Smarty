@@ -17,11 +17,11 @@
             <div class="col-md-12">
                 <div class="dash-item first-dash-item">
                     <h6 class="item-title"><i class="fa fa-user"></i>COURSE ATTENDANCE INFO</h6>
-                    <form  method="post" >
+                    <form  id="formAttendance" method="post" >
                         <div class="inner-item">
                             <div asp-validation-summary="ModelOnly" class="Dash-form text-danger"></div>
-                            <input asp-for="ViewModel.Latitude" type="hidden" />
-                            <input asp-for="ViewModel.Longitude" type="hidden" />
+                            <input id="Latitude" name="ViewModel.Latitude" type="hidden" />
+                            <input id="Longitude" name="ViewModel.Longitude" type="hidden" />
                             <div class="dash-form">
                                 <div class="col-sm-3">
                                     <label asp-for="ViewModel.CourseId" class="clear-top-margin"><i class="fa fa-calendar"></i>Course</label>
@@ -35,6 +35,9 @@
                                     <input type="date" asp-for="ViewModel.DateTime" />
                                     <span asp-validation-for="ViewModel.DateTime" class="text-danger"></span>
                                 </div>
+                                <div class="col-sm-3">
+                                    <input id="testInput" type="text"  />
+                                </div>
                                 <div class="clearfix"></div>
                                 <div class="col-sm-12">
                                     <button id="submit" type="submit">CREATE</button>
@@ -44,7 +47,6 @@
                         </div>
                         <div class="clearfix"></div>
                     </form>
-                    <button id="hamo">CREATE</button>
                 </div>
             </div>
         </div>
@@ -54,32 +56,25 @@
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
 <script>
+    let locationAccessErrorUrl = "@Model.LocationAccessErrorUrl";
 
     const successCallBack = (position) => {
+        console.log(position);
         $("#ViewModel_Latitude").val(position.coords.latitude);
         $("#ViewModel_Longitude").val(position.coords.longitude);
-        //$('form').submit();
+        $("#Latitude").val(position.coords.latitude);
+        $("#Longitude").val(position.coords.longitude);
     };
     const errorCallBack = (error) => {
-        if(error.code === 1)
-        {
-            toastr.error('Please Enable access to location to enable QRcode Attendance feature');
-        }
-        else if(error.code === 2)
-        {
-            toastr.error('Location information is not supported by this browser, QRCode Attendance feature will not work !');
-        }
-        else if(error.code === 3)
-        {
-            toastr.error('timeout! faild to get Location information, please try again');
-        }
-        else
-        {
-            toastr.error('An unknown error occurred, QRCode Attendance feature will not work !');
-        }
-
+        window.location.replace(`${locationAccessErrorUrl}?codeError=${error.code}`);
     };
-    navigator.geolocation.getCurrentPosition(successCallBack , errorCallBack);
+    
+
+    $("document").ready(function (){
+        navigator.geolocation.getCurrentPosition(successCallBack , errorCallBack );
+
+    });
+
     
 </script>
 
