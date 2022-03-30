@@ -16,7 +16,7 @@ namespace Smarty.Pages.CourseAttendances
 			_userManager = userManager;
 		}
 
-		public async Task<IActionResult> OnPostAsync(int? courseId, DateTime dateTime)
+		public async Task<IActionResult> OnPostAsync(int? courseId, DateTime? dateTime)
 		{
 			if (courseId == null || dateTime == null)
 				return BadRequest();

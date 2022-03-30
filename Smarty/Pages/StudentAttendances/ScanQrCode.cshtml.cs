@@ -31,7 +31,6 @@ namespace Smarty.Pages.StudentAttendances
 		[BindProperty]
 		public CourseAttendanceFormViewModel ViewModel { get; set; }
 		public string LocationAccessErrorUrl { get;  set; }
-		double AcceptedDistanceInMeters = 30.00;
 		public async Task<IActionResult> OnGetAsync(int? courseId, DateTime? dateTime)
 		{
 			if (courseId == null || dateTime == null)

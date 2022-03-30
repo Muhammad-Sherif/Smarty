@@ -88,14 +88,15 @@
     </div>
 
     <div class="parent-wrapper" id="outer-wrapper">
-
-        @RenderSection("SideMenu", false)
-        <!-- MAIN CONTENT -->
+    @if (SignInManager.IsSignedIn(User))
+        {
+            <partial name="_InstuctorSideMenuPartial" />
+            <div class="menu-togggle-btn">
+            <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
+            </div>
+        }
         <div class="main-content" id="content-wrapper">
             @RenderBody()
-
-
-
             <div class="dash-footer col-lg-12">
                 <p>Copyright Smarty 2022</p>
             </div>
