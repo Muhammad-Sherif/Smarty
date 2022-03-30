@@ -1,0 +1,143 @@
+﻿@page
+@model Smarty.Pages.test.IndexModel
+@{
+    ViewData["Title"] = "Course Materials";
+}
+
+
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12 clear-padding-xs">
+            <h5 class="page-title"><i class="fa fa-sliders"></i>COURSE MATERIALS</h5>
+            <div class="section-divider"></div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-12 clear-padding-xs">
+
+            <div class="col-lg-12">
+                <div class="dash-item first-dash-item">
+                    <h6 class="item-title"><i class="fa fa-search"></i>INFO</h6>
+                    <div class="inner-item dash-form ">
+                        <div class="col-sm-3">
+                            <label for="courseId">Courses</label>
+                            <select id="courseId" asp-items="Model.SelectList">
+                                <option value="">Select Course</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <a  style="margin-top:48px;"asp-page="/CourseMaterials/Upload"> Upload </a>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+
+
+
+                <div class="dash-item">
+
+                    <h6 class="item-title"><i class="fa fa-sliders"></i>COURSE MATERIALS</h6>
+                    <div class="inner-item">
+                        <table id="dataTable" class="display responsive nowrap" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th><i class="fa fa-sliders"></i>Name</th>
+                                    <th><i class="fa fa-sliders"></i>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.AntiForgeryToken();
+
+
+@section Scripts {
+
+<script>
+    function DeleteItem(name)
+    {
+            event.preventDefault();
+            var row = $(event.target).parents('tr');
+            $.ajax({
+                url:'/CourseMaterials/delete',
+                method:'GET',
+                headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                data:{fileName:name},
+                success:function() {
+                    row.fadeOut('slow' , function() {
+                        row.remove();
+                        toastr.success('Item removed successfully');
+                    });
+                },
+                error:function()   {
+                    toastr.error('Something goes wrong');
+                }
+            });
+            
+    }
+    function FillTableBody(data)
+    {
+        
+        $('#dataTable').DataTable().clear().destroy();
+        var tableBody = $('table tbody');
+        $.each(data, function (index , element) {
+            var row =
+            `<tr>
+                <td>
+                    ${element}
+                </td>
+                <td class="action-link">
+                    <a class="edit" href="CourseMaterials/download/${element}" title="Download"  ><i class="fa fa-download"></i></a>
+                    <a onclick="DeleteItem('${element}' )" class="delete"  href="#" title="Delete"><i class="fa fa-remove"></i></a>
+                </td>
+            </tr>`;
+            tableBody.append(row);
+        });
+        $('#dataTable').DataTable();
+
+    }
+    function AjaxCall()
+    {
+        var selectedValue = $('#courseId').val();
+        if(selectedValue !== '') {
+            $.ajax({
+                
+                url:`/CourseMaterials?handler=materials&CourseId=${selectedValue}`,
+                type:'GET',
+                success:function(data) {
+                    FillTableBody(data);
+                },
+                error:function(error)   {
+                    toastr.error('Something goes wrong');
+
+                }
+            });
+        }
+        else {
+            $('#dataTable').DataTable().clear().destroy();
+            $('#dataTable').DataTable();
+        }
+    }
+
+    $(document).ready(function () {
+        AjaxCall(); // get the grades data if the dropdown have a default value 
+        $('#courseId').on('change' , () => AjaxCall());
+
+    });
+</script>
+
+}
+
