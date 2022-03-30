@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using NToastNotify;
+using Smarty.AWSS3Helper;
 using Smarty.Data.Configurations.MailSettingsConfigurations;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Implementations;
@@ -22,7 +23,7 @@ builder.Services.AddRazorPages()
 builder.Services.AddRazorPages();
 
 builder.Services.AddDefaultIdentity<SmartyUser> (options =>
-options.SignIn.RequireConfirmedAccount = true)
+options.SignIn.RequireConfirmedAccount = false)
 .AddEntityFrameworkStores<SmartyDbContext>();
 
 builder.Services.AddDbContext<SmartyDbContext>( options => 
@@ -39,6 +40,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IInstructorService, InstructorService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.Configure<ServiceConfiguration>(builder.Configuration.GetSection("ServiceConfiguration"));
 
 
 var app = builder.Build();

@@ -7,7 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\AWSS3FileServices\**" />
+    <Content Remove="Pages\AWSS3FileServices\**" />
+    <EmbeddedResource Remove="Pages\AWSS3FileServices\**" />
+    <None Remove="Pages\AWSS3FileServices\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.8.10" />
     <PackageReference Include="EntityFrameworkCore.Triggered" Version="3.0.0" />
     <PackageReference Include="Geolocation.NetStandard" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.2" />
