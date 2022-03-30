@@ -25,6 +25,7 @@ namespace Smarty.Data.SmartyDBContext
         public DbSet<Member> Members { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Student> Students{ get; set; }
+        public DbSet<CourseMaterial> CourseMaterials { get; set; }
 
     }
 }
