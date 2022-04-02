@@ -1,15 +1,20 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
+using Smarty.Data.Enums;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Interfaces;
 using Smarty.Data.ViewModels.StudentAttendances;
 
 namespace Smarty.Pages.StudentAttendances
 {
-    public class EditModel : PageModel
+
+	[Authorize(Roles = nameof(Roles.Instructor))]
+
+	public class EditModel : PageModel
     {
 		private readonly IUnitOfWork _context;
 		private readonly IMapper _mapper;

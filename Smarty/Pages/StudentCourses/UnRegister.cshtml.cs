@@ -1,11 +1,15 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Smarty.Data.Enums;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Interfaces;
 
 namespace Smarty.Pages.StudentCourses
 {
+	[Authorize(Roles = nameof(Roles.Student))]
+
 	public class UnRegisterModel : PageModel
 	{
 		private readonly IUnitOfWork _context;

@@ -1,17 +1,21 @@
 using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
 using NToastNotify;
 using Smarty.AWSS3Helper;
+using Smarty.Data.Enums;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Interfaces;
 
 namespace Smarty.Pages.test
 {
+    [Authorize(Roles = nameof(Roles.Instructor))]
+
     public class DeleteModel : PageModel
     {
         private readonly IUnitOfWork _context;
@@ -32,7 +36,7 @@ namespace Smarty.Pages.test
         }
 
 
-        public async Task<IActionResult> OnGetAsync(string? fileName)
+        public async Task<IActionResult> OnGetAsync(string fileName)
         {
 
             if (fileName == null)

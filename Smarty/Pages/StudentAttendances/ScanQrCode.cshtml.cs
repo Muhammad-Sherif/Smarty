@@ -1,5 +1,6 @@
 using AutoMapper;
 using Geolocation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,6 +13,8 @@ using Smarty.Data.ViewModels.StudentAttendances;
 
 namespace Smarty.Pages.StudentAttendances
 {
+	[Authorize(Roles = nameof(Roles.Student))]
+
 	public class ScanQrCodeModel : PageModel
 	{
 		private readonly IUnitOfWork _context;

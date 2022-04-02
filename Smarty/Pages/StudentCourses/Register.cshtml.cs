@@ -1,15 +1,19 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
+using Smarty.Data.Enums;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Interfaces;
 using Smarty.Data.ViewModels.Courses;
 
 namespace Smarty.Pages.StudentCourses
 {
-    public class RegisterModel : PageModel
+	[Authorize(Roles = nameof(Roles.Student))]
+
+	public class RegisterModel : PageModel
     {
 		private readonly IMapper _mapper;
 		private readonly IUnitOfWork _context;

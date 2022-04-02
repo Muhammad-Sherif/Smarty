@@ -1,14 +1,18 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Smarty.Data.Enums;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Interfaces;
 using System.Drawing;
 
 namespace Smarty.Pages.CourseAttendances
 {
-    public class QrCodeModel : PageModel
+	[Authorize(Roles = nameof(Roles.Instructor))]
+
+	public class QrCodeModel : PageModel
     {
 		private readonly IUnitOfWork _context;
 		private readonly IMapper _mapper;

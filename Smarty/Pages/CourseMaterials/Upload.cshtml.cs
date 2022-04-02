@@ -1,6 +1,7 @@
 using Amazon;
 using Amazon.S3;
 using Amazon.S3.Transfer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using NToastNotify;
 using Smarty.AWSS3Helper;
+using Smarty.Data.Enums;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Interfaces;
 using Smarty.Data.Services;
@@ -15,6 +17,8 @@ using Smarty.Data.ViewModels.CourseMaterialViewModel;
 
 namespace Smarty.Pages.test
 {
+    [Authorize(Roles = nameof(Roles.Instructor))]
+
     public class UploadModel : PageModel
     {
         private readonly IUnitOfWork _context;

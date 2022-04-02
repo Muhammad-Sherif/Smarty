@@ -1,9 +1,11 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NToastNotify;
+using Smarty.Data.Enums;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Interfaces;
 using Smarty.Data.Services;
@@ -12,6 +14,8 @@ using Smarty.Data.ViewModels.Courses;
 
 namespace Smarty.Pages.CourseGrades
 {
+	[Authorize(Roles = nameof(Roles.Instructor))]
+
 	public class CreateModel : PageModel
 	{
 		private readonly IMapper _mapper;

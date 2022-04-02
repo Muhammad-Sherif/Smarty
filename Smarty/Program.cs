@@ -22,9 +22,8 @@ builder.Services.AddRazorPages()
 
 builder.Services.AddRazorPages();
 
-builder.Services.AddDefaultIdentity<SmartyUser> (options =>
-options.SignIn.RequireConfirmedAccount = false)
-.AddEntityFrameworkStores<SmartyDbContext>();
+builder.Services.AddDefaultIdentity<SmartyUser>(options =>
+options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>().AddDefaultUI().AddEntityFrameworkStores<SmartyDbContext>();
 
 builder.Services.AddDbContext<SmartyDbContext>( options => 
 { 

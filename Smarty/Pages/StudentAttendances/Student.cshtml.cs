@@ -1,8 +1,10 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Smarty.Data.Enums;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Interfaces;
 using Smarty.Data.Services;
@@ -10,6 +12,8 @@ using Smarty.Data.ViewModels.StudentAttendances;
 
 namespace Smarty.Pages.StudentAttendances
 {
+    [Authorize(Roles = nameof(Roles.Student))]
+
     public class StudentModel : PageModel
     {
         private readonly IUnitOfWork _context;

@@ -1,12 +1,16 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Smarty.Data.Enums;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Interfaces;
 
 namespace Smarty.Pages.CourseGrades
 {
-    public class DeleteModel : PageModel
+	[Authorize(Roles = nameof(Roles.Instructor))]
+
+	public class DeleteModel : PageModel
     {
 		private readonly IUnitOfWork _context;
 		private readonly UserManager<SmartyUser> _userManager;

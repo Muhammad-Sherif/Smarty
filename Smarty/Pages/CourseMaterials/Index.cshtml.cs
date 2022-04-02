@@ -2,6 +2,7 @@ using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,13 +10,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using NToastNotify;
 using Smarty.AWSS3Helper;
+using Smarty.Data.Enums;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Interfaces;
 using Smarty.Data.Services;
 
 namespace Smarty.Pages.test
 {
-    public class IndexModel : PageModel
+	[Authorize(Roles = nameof(Roles.Instructor))]
+	public class IndexModel : PageModel
     {
 		private readonly IUnitOfWork _context;
 		private readonly IInstructorService _instructorService;

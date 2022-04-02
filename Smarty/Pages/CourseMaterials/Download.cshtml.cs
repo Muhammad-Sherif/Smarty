@@ -1,6 +1,7 @@
 using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
@@ -9,6 +10,8 @@ using Smarty.AWSS3Helper;
 
 namespace Smarty.Pages.test
 {
+    [Authorize]
+
     public class DownloadModel : PageModel
     {
         private readonly IToastNotification _toastr;
@@ -19,7 +22,7 @@ namespace Smarty.Pages.test
             _serviceConfiguration = serviceConfiguration.Value;
         }
 
-        public async Task<IActionResult> OnGetAsync(string? fileName)
+        public async Task<IActionResult> OnGetAsync(string fileName)
         {
             if (fileName == null)
             {

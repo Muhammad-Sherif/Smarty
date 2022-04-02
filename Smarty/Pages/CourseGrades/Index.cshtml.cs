@@ -1,8 +1,10 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Smarty.Data.Enums;
 using Smarty.Data.Models;
 using Smarty.Data.Repositories.Interfaces;
 using Smarty.Data.Services;
@@ -11,7 +13,9 @@ using Smarty.Data.ViewModels.CourseGrades;
 
 namespace Smarty.Pages.CourseGrades
 {
-    public class IndexModel : PageModel
+	[Authorize(Roles = nameof(Roles.Instructor))]
+
+	public class IndexModel : PageModel
     {
         private readonly IUnitOfWork _context;
         private readonly IMapper _mapper;
