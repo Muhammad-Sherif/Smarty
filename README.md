@@ -1,11 +1,12 @@
-# ASP.NET Core Razor Pages Smarty
+# ASP.NET Core Razor Pages PROJECT
 ## Smester Management System (Still not finished yet)
+### Automation system facilitate all traditional work and long time tasks that student and instructor do in the university semster
 
 #### Application Features
 
 * Course creation by instructor & course registration by student
 * taking students attendance using qrcode and location
-* Courses and students grades management
+* Courses and students grades management 
 * courses materials upload and download
 * Dashborads Summary for student grades & attendances 
 * Differnet roles for instructors and students 
