@@ -1,6 +1,6 @@
 # ASP.NET Core Razor Pages PROJECT
 ## Smester Management System (Still not finished yet)
-### Automation system facilitate all traditional work and long time tasks that student and instructor do in the university semster
+### Automation system facilitate and speed time for all traditional work and long time tasks that student and instructor do in the university semester 
 
 #### Application Features
 
@@ -20,6 +20,8 @@
 * SQL SERVER
 * Repository Pattern 
 * Auto Mapper
+* Toastr Notifications
 * Javascript 
 * Jquery
 * bootstrap
+* Jquery Datatables
