@@ -14,6 +14,7 @@ namespace Smarty.Data.AutoMapper
             CreateMap<Course, CourseFormViewModel>();
             CreateMap<Course, InstructorCourseViewModel>();
             CreateMap<Course, StudentCourseViewModel>();
+            CreateMap<Student, RegisterdStudentViewModel>();
 
 
         }

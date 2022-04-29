@@ -1,0 +1,122 @@
+﻿@page
+@model RegisterdStudentsModel
+@{
+    ViewData["Title"] = "Register Students";
+
+}
+
+
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12 clear-padding-xs">
+            <h5 class="page-title"><i class="fa fa-sliders"></i>REGISTED STUDENTS</h5>
+            <div class="section-divider"></div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-12 clear-padding-xs">
+
+            <div class="col-lg-12">
+                <div class="dash-item first-dash-item">
+                    <h6 class="item-title"><i class="fa fa-search"></i>INFO</h6>
+                    <div class="inner-item dash-form ">
+                        <div class="col-sm-3">
+                            <label for="courseId">Courses</label>
+                            <select id="courseId" asp-items="Model.SelectList">
+                                <option value="">Select Course</option>
+                            </select>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+
+
+
+                <div class="dash-item">
+
+                    <h6 class="item-title"><i class="fa fa-sliders"></i>COURSE GRADES</h6>
+                    <div class="inner-item">
+                        <table id="dataTable" class="display responsive nowrap" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th><i class="fa fa-sliders"></i>First Name</th>
+                                    <th><i class="fa fa-sliders"></i>Last Name</th>
+                                    <th><i class="fa fa-sliders"></i>Department</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.AntiForgeryToken();
+
+
+@section Scripts {
+
+<script>
+
+    function FillTableBody(data)
+    {
+        
+        $('#dataTable').DataTable().clear().destroy();
+        var tableBody = $('table tbody');
+        $.each(data, function (index , element) {
+            var row =
+            `<tr>
+                <td>
+                    ${element.firstName}
+                </td>
+                <td>
+                    ${element.lastName}
+                </td>
+                <td>
+                    ${element.department}
+                </td>
+            </tr>`;
+            tableBody.append(row);
+        });
+        $('#dataTable').DataTable();
+
+    }
+    function AjaxCall()
+    {
+        var selectedValue = $('#courseId').val();
+        if(selectedValue !== '') {
+            $.ajax({
+                url:`/courses/registerdStudents?handler=students&courseId=${selectedValue}`,
+                type:'GET',
+                success:function(data) {
+                    FillTableBody(data);
+                },
+                error:function(error)   {
+                    toastr.error('Something goes wrong');
+
+                }
+            });
+        }
+        else {
+            $('#dataTable').DataTable().clear().destroy();
+            $('#dataTable').DataTable();
+        }
+    }
+
+    $(document).ready(function () {
+        AjaxCall(); // get the  data if the dropdown have a default value 
+        $('#courseId').on('change' , () => AjaxCall());
+
+    });
+</script>
+
+}
+
