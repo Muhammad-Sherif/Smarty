@@ -16,7 +16,7 @@ namespace Smarty.Data.Repositories.Implementations
 		{
             _context = context;
 		}
-
+        
 		public IEnumerable<T> GetAll()
 		{
             return _context.Set<T>().ToList();

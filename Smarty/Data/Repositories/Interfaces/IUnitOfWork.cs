@@ -8,8 +8,9 @@ namespace Smarty.Data.Repositories.Interfaces
 {
 	public interface IUnitOfWork : IDisposable
 	{
-		IGenericRepository<Course> Courses { get;}
-		IGenericRepository<CourseGrade>	CourseGrades { get;}
+		IGenericRepository<Course>	Courses{ get;}
+		IInstuctorsDashboardRepository InstructorsDashboard { get;}
+		IGenericRepository<CourseGrade> CourseGrades { get;}
 		IGenericRepository<CourseAttendance> CourseAttendances { get; }
 		IGenericRepository<StudentsGrades> StudentsGrades { get;}
 		IGenericRepository<StudentsCourses> StudentsCourses { get;}

@@ -11,7 +11,7 @@ namespace Smarty.Data.Repositories.Implementations
 	public class UnitOfWork : IUnitOfWork
 	{
 		private readonly SmartyDbContext _context;
-		public IGenericRepository<Course> Courses { get; private set; }
+		public IGenericRepository<Course>  Courses { get; private set; }
 		public IGenericRepository<CourseGrade> CourseGrades{ get; private set; }
 		public IGenericRepository<CourseAttendance> CourseAttendances{ get; private set; }
 		public IGenericRepository<StudentsGrades> StudentsGrades{ get; private set; }
@@ -22,6 +22,7 @@ namespace Smarty.Data.Repositories.Implementations
 
 		public IGenericRepository<Member> Members { get; private set; }
 
+		public IInstuctorsDashboardRepository InstructorsDashboard { get; private set; }
 
 		public UnitOfWork(SmartyDbContext context)
 		{
@@ -35,6 +36,7 @@ namespace Smarty.Data.Repositories.Implementations
 			CourseAttendances = new GenericRepository<CourseAttendance>(_context);
 			StudentsAttendances= new GenericRepository<StudentsAttendances>(_context);
 			CourseMaterials = new GenericRepository<CourseMaterial>(_context);
+			InstructorsDashboard = new InstuctorsDashboardRepository (_context);
 
 		}
 		public void Dispose()

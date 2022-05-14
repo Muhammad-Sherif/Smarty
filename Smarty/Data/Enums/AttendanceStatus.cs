@@ -3,6 +3,7 @@
 	public enum AttendanceStatus
 	{
 		Present,
-		Absent
+		Absent,
+		Excuse
 	}
 }

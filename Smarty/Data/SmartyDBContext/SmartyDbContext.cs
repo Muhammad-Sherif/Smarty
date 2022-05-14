@@ -20,6 +20,8 @@ namespace Smarty.Data.SmartyDBContext
         }
 		public DbSet<Course> Courses { get; set; }
         public DbSet<CourseGrade> CoursesGrades { get; set; }
+        public DbSet<StudentsAttendances> StudentsAttendances { get; set; }
+        public DbSet<StudentsCourses> StudentsCourses { get; set; }
         public DbSet<StudentsGrades> StudentsGrades { get; set; }
         public DbSet<Lab> Labs { get; set; }
         public DbSet<Member> Members { get; set; }
