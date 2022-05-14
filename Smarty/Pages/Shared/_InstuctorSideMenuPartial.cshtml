@@ -1,7 +1,8 @@
 ﻿<div class="sidebar-nav-wrapper" id="sidebar-wrapper">
     <ul class="sidebar-nav">
         <li>
-            <a href="admin-dashboard.html"><i class="fa fa-home menu-icon"></i> HOME</a>
+            <a asp-page="/Dashboards/Instructor" ><i class="fa fa-home menu-icon"></i>Home</a>
+
         </li>
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -20,6 +21,7 @@
             </ul>
             <div class="clearfix"></div>
         </li> 
+
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-user-secret menu-icon"></i> COURSES ATTENDANCE<span class="caret"></span>
@@ -51,21 +53,21 @@
                 <li>
                     <a asp-page="/StudentGrades/InstrcutorIndex"><i class="fa fa-caret-right"></i>STUDENTS GRADES</a>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-users menu-icon"></i> COURSES MATERIALS<span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a asp-page="/CourseMaterials/Upload" ><i class="fa fa-caret-right"></i>UPLOAD </a>
-                        </li>
-                        <li>
-                            <a asp-page="/CourseMaterials/Index"><i class="fa fa-caret-right"></i>ALL MATERAILS</a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </li>
             </ul>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-users menu-icon"></i> COURSES MATERIALS<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a asp-page="/CourseMaterials/Upload" ><i class="fa fa-caret-right"></i>UPLOAD </a>
+                    </li>
+                    <li>
+                        <a asp-page="/CourseMaterials/Index"><i class="fa fa-caret-right"></i>ALL MATERAILS</a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </li>
             <div class="clearfix"></div>
         </li> 
 

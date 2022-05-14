@@ -1,0 +1,285 @@
+﻿@page
+@model Smarty.Pages.DashBoards.InstructorModel
+@{
+}
+
+<div class="container-fluid">
+
+
+    <div class="row">
+						<div class="col-lg-12 clear-padding-xs">
+							<h5 class="page-title"><i class="fa fa-home"></i>HOME</h5>
+							<div class="section-divider"></div>
+							<div class="dashboard-stats">
+								<div class="col-sm-6 col-md-3">
+									<div class="stat-item">
+										<div class="stats">
+											<div class="col-xs-8 count">
+												<h1>@Model.RegisterdStudentCount</h1>
+												<p>STUDENTS</p>
+											</div>
+											<div class="col-xs-4 icon">
+												<i class="fa fa-users ex-icon"></i>
+											</div>
+											<div class="clearfix"></div>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="col-sm-6 col-md-3">
+									<div class="stat-item">
+										<div class="stats">
+											<div class="col-xs-8 count">
+												<h1>@Model.InsturctorCoursesCount</h1>
+												<p>COURSES</p>
+											</div>
+											<div class="col-xs-4 icon">
+												<i class="fa fa-user-secret danger-icon"></i>
+											</div>
+											<div class="clearfix"></div>
+										</div>
+
+										<div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="clearfix visible-sm"></div>
+								<div class="col-sm-6 col-md-3">
+									<div class="stat-item">
+										<div class="stats">
+											<div class="col-xs-8 count">
+												<h1>799</h1>
+												<p>MESSAGES</p>
+											</div>
+											<div class="col-xs-4 icon">
+												<i class="fa fa-envelope-o success-icon"></i>
+											</div>
+											<div class="clearfix"></div>
+										</div>
+										
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+	</div>
+
+					
+    
+
+    <div class="row">
+        <div class="col-lg-12 clear-padding-xs">
+            <div class="col-sm-8">
+                <div>
+                    <div class="my-msg dash-item">
+                        <h6 class="item-title"><i class="fa fa-bar-chart"></i>COURSES ATTENDANCE SUMMARY</h6>
+                        <div class="inner-item">
+                            <div class="summary-chart">
+                                <canvas id="coursesAttendancesSummary"></canvas>
+                                <div class="chart-legends">
+                                    <span class="red">ABSENT</span>
+                                    <span class="orange">EXCUSE</span>
+                                    <span class="green">PRESENT</span>
+                                </div>
+                                <!-- <div class="chart-title">
+                                    <h6 class="bottom-title">STUDENT ATTENDENCE BAR</h6>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div>
+                    <div class="my-msg dash-item">
+                        <h6 class="item-title"><i class="fa fa-calendar"></i>TODAY'S TIMETABLE</h6>
+                        <div class="inner-item">
+							@foreach(var course in Model.TimeTableViewModel)
+							{
+
+								<div class="timetable-item">
+									<div class="col-xs-3 clear-padding">
+										<p><span class="time">@course.CourseTime</span></p>
+									</div>
+									<div class="col-xs-9">
+										<p class="title">@course.CourseName</p>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+
+							}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-12 clear-padding-xs">
+            <div class="col-sm-8">
+                <div>
+                    <div class="my-msg dash-item">
+                        <h6 class="item-title"><i class="fa fa-bar-chart"></i>COURSES GRADES AVERAGE</h6>
+                        <div class="chart-item">
+                            <iframe class="chartjs-hidden-iframe" tabindex="-1" style="display: block; overflow: hidden; border: 0px; margin: 0px; inset: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;"></iframe>
+                            <canvas id="coursesGradesAverage" height="350" width="846" style="display: block; height: 519px; width: 677px;"></canvas>
+                            <div class="chart-legends">
+                                <span class="red">&lt;50%</span>
+                                <span class="green">&gt;50%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+@section Scripts{
+
+<script>
+
+    function FillCoursesAverageDashboard(coursesData)
+    {
+        console.log(coursesData);
+        var coursesBackgroundColors =  coursesData.coursesAverages.map( (element)  =>
+        {
+        
+            if(element > 50.0)
+            {
+                return 'rgba(39, 174, 96, 1)';
+            }
+            else
+            {
+                return 'rgba(255, 118, 118, 1)';
+            }
+
+        });
+        var myChart = new Chart( $('#coursesGradesAverage'), {
+		type: 'horizontalBar',
+		data: {
+			labels: coursesData.coursesName,
+			datasets: [{
+				data: coursesData.coursesAverages,
+                backgroundColor : coursesBackgroundColors ,
+				borderWidth: 0
+			}]
+		},
+		options: {
+			scales: {
+				xAxes: [{
+					ticks: {
+						beginAtZero:true
+					},
+					gridLines: {
+						display:false
+					}
+				}],
+				yAxes: [{
+					gridLines: {
+						display:false
+					},
+					//barPercentage: 0.5,
+					categoryPercentage: 0.5
+				}]
+			},
+			legend: {
+				display: false
+			}
+		}
+	});
+
+    }
+
+
+
+    function FillCoursesAttendanceDashboard(coursesData)
+    {
+        console.log(coursesData);
+        var myChart = new Chart( $('#coursesAttendancesSummary'), {
+		type: 'bar',
+		data: {
+			labels: coursesData.coursesNames,
+			datasets: [
+				{
+					data: coursesData.absentCount,
+					backgroundColor: 'rgba(255, 118, 118, 1)',
+					borderWidth: 0
+				},
+				{
+					data: coursesData.excuseCount,
+					backgroundColor:'rgba(255, 195, 109, 1)',
+					borderWidth: 0
+				},
+				{
+					data: coursesData.presentCount,
+					backgroundColor: 'rgba(39, 174, 96, 1)',
+					borderWidth: 0
+				}
+			]
+		},
+		options: {
+			scales: {
+				xAxes: [{
+					ticks: {
+						beginAtZero:true
+					},
+					gridLines: {
+						display:false
+					}
+				}],
+				yAxes: [{
+					gridLines: {
+						display:false
+					},
+					//barPercentage: 0.5,
+					categoryPercentage: 0.5,
+					ticks: {
+						beginAtZero:true
+					}
+				}]
+			},
+			legend: {
+				display: false
+			}
+		}
+	});
+
+    }
+
+
+    $(document).ready(function () {
+        $.ajax({
+            url:`/dashboards/instructor?handler=dashboardCoursesAverage`,
+            type:'GET',
+            success:function(data) {
+                FillCoursesAverageDashboard(data);
+            },
+            error:function(error)   {
+                toastr.error('fail to load dashboard data');
+
+            }
+        });
+
+        $.ajax({
+            url:`/dashboards/instructor?handler=dashboardCoursesAttendanceSummary`,
+            type:'GET',
+            success:function(data) {
+                FillCoursesAttendanceDashboard(data);
+            },
+            error:function(error)   {
+                toastr.error('fail to load dashboard data');
+
+            }
+        });
+
+
+    });
+
+</script>
+}
