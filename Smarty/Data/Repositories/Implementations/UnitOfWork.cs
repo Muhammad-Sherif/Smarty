@@ -23,6 +23,7 @@ namespace Smarty.Data.Repositories.Implementations
 		public IGenericRepository<Member> Members { get; private set; }
 
 		public IInstuctorsDashboardRepository InstructorsDashboard { get; private set; }
+		public IStudentsDashboardRepoistory StudentsDashboard{ get; private set; }
 
 		public UnitOfWork(SmartyDbContext context)
 		{
@@ -36,7 +37,8 @@ namespace Smarty.Data.Repositories.Implementations
 			CourseAttendances = new GenericRepository<CourseAttendance>(_context);
 			StudentsAttendances= new GenericRepository<StudentsAttendances>(_context);
 			CourseMaterials = new GenericRepository<CourseMaterial>(_context);
-			InstructorsDashboard = new InstuctorsDashboardRepository (_context);
+			InstructorsDashboard = new InstuctorsDashboardRepository(_context);
+			StudentsDashboard = new StudentsDashboardRepoistory(_context);
 
 		}
 		public void Dispose()

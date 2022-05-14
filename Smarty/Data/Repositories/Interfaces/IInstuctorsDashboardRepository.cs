@@ -13,7 +13,7 @@ namespace Smarty.Data.Repositories.Interfaces
 	{
 		CourseAttendanceSummaryViewModel GetInstructorCoursesAttendanceSummary(int instructorId);
 		CourseGradesAverageViewModel GetInstructorCoursesGradesAverage(int instructorId);
-		List<InstructorTimeTableViewModel> GetInstructorTimeTable(int instructorId);
+		List<TimeTableViewModel> GetInstructorTimeTable(int instructorId);
 		int InstructorCoursesCount(int instructorId);
 		int RegisterdStudentCountInInstructorCourses(int instructorId);
 

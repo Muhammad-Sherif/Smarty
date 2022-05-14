@@ -76,14 +76,14 @@ namespace Smarty.Data.Repositories.Implementations
 
 		
 
-        public List<InstructorTimeTableViewModel> GetInstructorTimeTable(int instructorId)
+        public List<TimeTableViewModel> GetInstructorTimeTable(int instructorId)
 
         {
 			var currentDay= DateTime.Now.DayOfWeek.ToString();
             var instructorTodayTimeTable = (from c in _context.Courses
                                             where c.InstructorId== instructorId && c.Day == currentDay
 											orderby c.Time
-                                            select new InstructorTimeTableViewModel
+                                            select new TimeTableViewModel
                                             { CourseName = c.Name, CourseTime = c.Time })
                                             .ToList();
             return instructorTodayTimeTable;
