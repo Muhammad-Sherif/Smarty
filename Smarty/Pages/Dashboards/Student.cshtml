@@ -1,7 +1,10 @@
 ﻿@page
-@model Smarty.Pages.DashBoards.InstructorModel
+@model Smarty.Pages.Dashboards.StudentModel
 @{
 }
+
+
+
 
 <div class="container-fluid">
 
@@ -15,7 +18,7 @@
 									<div class="stat-item">
 										<div class="stats">
 											<div class="col-xs-8 count">
-												<h1>@Model.RegisterdStudentCount</h1>
+												<h1>0</h1>
 												<p>STUDENTS</p>
 											</div>
 											<div class="col-xs-4 icon">
@@ -30,7 +33,7 @@
 									<div class="stat-item">
 										<div class="stats">
 											<div class="col-xs-8 count">
-												<h1>@Model.InsturctorCoursesCount</h1>
+												<h1>@Model.StudentRegisterdCoursesCount</h1>
 												<p>COURSES</p>
 											</div>
 											<div class="col-xs-4 icon">
@@ -144,9 +147,9 @@
 
 <script>
 
-    function FillCoursesAverageDashboard(coursesData)
+    function FillCoursesGradesTotalDashboard(coursesData)
     {
-        var coursesBackgroundColors =  coursesData.coursesAverages.map( (element)  =>
+        var coursesBackgroundColors =  coursesData.coursesTotals.map( (element)  =>
         {
         
             if(element > 50.0)
@@ -164,7 +167,7 @@
 		data: {
 			labels: coursesData.coursesName,
 			datasets: [{
-				data: coursesData.coursesAverages,
+				data: coursesData.coursesTotals,
                 backgroundColor : coursesBackgroundColors ,
 				borderWidth: 0
 			}]
@@ -199,6 +202,7 @@
 
     function FillCoursesAttendanceDashboard(coursesData)
     {
+        console.log(coursesData);
         var myChart = new Chart( $('#coursesAttendancesSummary'), {
 		type: 'bar',
 		data: {
@@ -253,10 +257,10 @@
 
     $(document).ready(function () {
         $.ajax({
-            url:`/dashboards/instructor?handler=dashboardCoursesAverage`,
+            url:`/dashboards/student?handler=dashboardCoursesAverage`,
             type:'GET',
             success:function(data) {
-                FillCoursesAverageDashboard(data);
+                FillCoursesGradesTotalDashboard(data);
             },
             error:function(error)   {
                 toastr.error('fail to load dashboard data');
@@ -265,7 +269,7 @@
         });
 
         $.ajax({
-            url:`/dashboards/instructor?handler=dashboardCoursesAttendanceSummary`,
+            url:`/dashboards/student?handler=dashboardCoursesAttendanceSummary`,
             type:'GET',
             success:function(data) {
                 FillCoursesAttendanceDashboard(data);
