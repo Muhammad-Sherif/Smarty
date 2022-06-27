@@ -57,7 +57,7 @@ namespace Smarty.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+            returnUrl ??= Url.Page("/Dashboards/Student");
             if (ModelState.IsValid)
 			{
 				var user = _mapper.Map<SmartyUser>(ViewModel);

@@ -32,7 +32,7 @@
 <body>
     <div class="row dashboard-top-nav">
         <div class="col-sm-3 logo">
-            <h5><i class="fa fa-book"></i>Smarty</h5>
+            <img src="~/assets/images/icon.png" style="width:66px;">
         </div>
         <div class="col-sm-4 top-search">
             <div class="search">
@@ -46,7 +46,7 @@
                 {
                     <li class="user dropdown">
                         <a asp-area="Identity" asp-page="/Account/Manage/Index" class="dropdown-toggle" data-toggle="dropdown">
-                            <span>Hello @User.Identity.Name!<span class="caret"></span></span>
+                            <span> <i class="fa-solid fa-user-graduate"></i> Hello @User.Identity.Name!<span class="caret"></span></span>
                         </a>
                         <ul class="dropdown-menu notification-list">
                             <li>
@@ -106,9 +106,7 @@
         }
         <div class="main-content" id="content-wrapper">
             @RenderBody()
-            <div class="dash-footer col-lg-12">
-                <p>Copyright Smarty 2022</p>
-            </div>
+     
         </div>
 
     </div>

@@ -17,7 +17,6 @@ using Smarty.Data.Services;
 
 namespace Smarty.Pages.test
 {
-	[Authorize(Roles = nameof(Roles.Instructor))]
 	public class IndexModel : PageModel
     {
 		private readonly IUnitOfWork _context;
